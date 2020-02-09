@@ -1,6 +1,7 @@
 package com.thowv;
 
 import com.thowv.model.ApplicationModel;
+import com.thowv.view.ApplicationView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -10,7 +11,7 @@ public class Application extends javafx.application.Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            ApplicationModel.createStage(primaryStage);
+            ApplicationView applicationModel = new ApplicationView(primaryStage);
             primaryStage.show();
         }
         catch (IOException e) {
