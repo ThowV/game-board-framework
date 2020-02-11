@@ -1,19 +1,21 @@
-package com.thowv.view;
+package com.thowv.reversiboard;
 
-import com.thowv.controller.BoardController;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
 import javafx.geometry.Pos;
 import javafx.scene.control.Control;
+import javafx.scene.control.SkinBase;
 import javafx.scene.layout.*;
 
-public class BoardView extends HBox {
-    /**
-     * Creates a board view
-     * Sizing inspiration taken from https://stackoverflow.com/questions/44979700/square-gridpane-of-square-cells
-     * @param boardSize amount of tiles on each axis
-     */
-    public BoardView(int boardSize) {
+class ReversiBoardSkin extends SkinBase {
+    ReversiBoardSkin(ReversiBoard reversiBoardControl) {
+        super(reversiBoardControl);
+
+        createBoard(reversiBoardControl.getBoardSize());
+    }
+
+    private void createBoard(int boardSize) {
+        HBox horizontalCenterHBox = new HBox();
         GridPane gridPane = new GridPane();
         VBox verticalCenterVBox = new VBox();
 
@@ -22,16 +24,16 @@ public class BoardView extends HBox {
         gridPane.setVgap(2);
 
         // Alignment
-        setAlignment(Pos.CENTER); // This class extends HBox
+        horizontalCenterHBox.setAlignment(Pos.CENTER); // This class extends HBox
         verticalCenterVBox.setAlignment(Pos.CENTER);
 
         // Sizing: horizontalCenterBox (this) and verticalCenterVBox
-        setMinSize(boardSize * 10, boardSize * 10);
-        HBox.setHgrow(this, Priority.ALWAYS);
+        horizontalCenterHBox.setMinSize(boardSize * 10, boardSize * 10);
+        HBox.setHgrow(horizontalCenterHBox, Priority.ALWAYS);
         VBox.setVgrow(gridPane, Priority.ALWAYS);
 
         // Sizing: verticalCenterVBox
-        NumberBinding numberBinding = Bindings.min(widthProperty(), heightProperty());
+        NumberBinding numberBinding = Bindings.min(horizontalCenterHBox.widthProperty(), horizontalCenterHBox.heightProperty());
 
         verticalCenterVBox.prefWidthProperty().bind(numberBinding);
         verticalCenterVBox.prefHeightProperty().bind(numberBinding);
@@ -48,7 +50,7 @@ public class BoardView extends HBox {
 
         for (int y = 0; y < boardSize; y++) {
             RowConstraints rowConstraints = new RowConstraints(Control.USE_PREF_SIZE,
-                Control.USE_COMPUTED_SIZE, Double.MAX_VALUE);
+                    Control.USE_COMPUTED_SIZE, Double.MAX_VALUE);
 
             rowConstraints.setVgrow(Priority.SOMETIMES);
             gridPane.getRowConstraints().add(rowConstraints);
@@ -56,19 +58,20 @@ public class BoardView extends HBox {
 
         // Connect objects
         verticalCenterVBox.getChildren().add(gridPane);
-        getChildren().add(verticalCenterVBox);
+        horizontalCenterHBox.getChildren().add(verticalCenterVBox);
 
         // Add tiles
-        updateTiles(gridPane, boardSize);
+        createTiles(gridPane, boardSize);
 
-        new BoardController().instantiate(this, boardSize);
+        // Gets forwarded to the ReversiBoard.java class. We add the created board
+        getChildren().add(horizontalCenterHBox);
     }
 
-    public void updateTiles(GridPane gridPane, int boardSize) {
-        // Add tiles to the board
+    private void createTiles(GridPane gridPane, int boardSize) {
+        // Add tiles to the reversiboard
         for (int x = 0; x < boardSize; x++) {
             for (int y = 0; y < boardSize; y++) {
-                TileView tile = new TileView(x, y);
+                BoardTile tile = new BoardTile(x, y);
 
                 GridPane.setColumnIndex(tile, x);
                 GridPane.setRowIndex(tile, y);

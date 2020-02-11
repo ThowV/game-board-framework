@@ -1,0 +1,19 @@
+.tile {
+    -fx-background-color: #4EA379;
+}
+
+.stonePieceEmpty {
+    -fx-fill: rgba(255, 255, 255, 0.15);
+}
+
+.stonePieceEmpty:hover {
+    -fx-fill: rgba(255, 255, 255, 0.5);
+}
+
+.stonePieceWhite {
+    -fx-fill: radial-gradient(center 50% 50%, radius 50%, #F2F2F2 0%, #D1D1D1 100%);
+}
+
+.stonePieceBlack {
+    -fx-fill: radial-gradient(center 50% 50%, radius 50%, #4A4A4A 0%, #242424 100%);
+}

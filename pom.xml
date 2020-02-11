@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.thowv</groupId>
-    <artifactId>javafx-board</artifactId>
+    <artifactId>javafx-reversi-board</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -92,7 +92,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>com.thowv.Application</mainClass>
+                    <mainClass>com.thowv.reversiboard.demo.Demo</mainClass>
                 </configuration>
             </plugin>
 
@@ -110,7 +110,7 @@
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.thowv.ApplicationLauncher</mainClass>
+                                    <mainClass>com.thowv.reversiboard.demo.DemoLauncher</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
