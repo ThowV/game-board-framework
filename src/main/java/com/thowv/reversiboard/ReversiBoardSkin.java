@@ -19,9 +19,7 @@ class ReversiBoardSkin extends SkinBase {
         GridPane gridPane = new GridPane();
         VBox verticalCenterVBox = new VBox();
 
-        gridPane.setGridLinesVisible(true);
-        gridPane.setHgap(2);
-        gridPane.setVgap(2);
+        gridPane.getStyleClass().add("board");
 
         // Alignment
         horizontalCenterHBox.setAlignment(Pos.CENTER); // This class extends HBox
@@ -68,7 +66,7 @@ class ReversiBoardSkin extends SkinBase {
     }
 
     private void createTiles(GridPane gridPane, int boardSize) {
-        // Add tiles to the reversiboard
+        // Add tiles to the reversi board
         for (int x = 0; x < boardSize; x++) {
             for (int y = 0; y < boardSize; y++) {
                 BoardTile tile = new BoardTile(x, y);

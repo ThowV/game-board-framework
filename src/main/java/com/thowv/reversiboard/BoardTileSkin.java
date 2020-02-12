@@ -3,12 +3,15 @@ package com.thowv.reversiboard;
 import javafx.beans.binding.Bindings;
 import javafx.scene.control.SkinBase;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 class BoardTileSkin extends SkinBase {
+    BoardTile boardTileControl;
+
     BoardTileSkin(BoardTile boardTileControl) {
         super(boardTileControl);
+
+        this.boardTileControl = boardTileControl;
 
         createTile();
     }

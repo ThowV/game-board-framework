@@ -1,12 +1,18 @@
 .tile {
     -fx-background-color: #4EA379;
+    -fx-border-width: 1px;
+    -fx-border-color: #000000;
 }
 
 .stonePieceEmpty {
-    -fx-fill: rgba(255, 255, 255, 0.15);
+    -fx-fill: radial-gradient(center 50% 50%, radius 90%, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
 .stonePieceEmpty:hover {
+    -fx-fill: rgba(255, 255, 255, 0.3);
+}
+
+.stonePieceEmpty:pressed {
     -fx-fill: rgba(255, 255, 255, 0.5);
 }
 

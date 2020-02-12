@@ -1,5 +1,6 @@
 package com.thowv.reversiboard;
 
+import javafx.event.EventHandler;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 
@@ -7,9 +8,14 @@ public class BoardTile extends Control {
     private int xCord;
     private int yCord;
 
-    BoardTile(int xCord, int yCord) {
+    BoardTile(int xCord, int yCord, EventHandler<? super BoardTileActivatedEvent> boardTileActivatedEventHandler) {
         this.xCord = xCord;
         this.yCord = yCord;
+
+        addEventHandler(
+                BoardTileActivatedEvent.TILE_ACTIVATED,
+                boardTileActivatedEventHandler
+        );
     }
 
     @Override
