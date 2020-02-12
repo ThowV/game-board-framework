@@ -1,5 +1,6 @@
 package com.thowv.reversiboard;
 
+import com.thowv.reversiboard.skins.ReversiBoardSkin;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 
@@ -26,7 +27,7 @@ public class ReversiBoard extends Control {
         return new ReversiBoardSkin(this);
     }
 
-    int getBoardSize() {
+    public int getBoardSize() {
         return boardSize;
     }
 }

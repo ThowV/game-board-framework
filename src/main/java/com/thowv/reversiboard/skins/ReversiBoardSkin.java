@@ -1,14 +1,18 @@
-package com.thowv.reversiboard;
+package com.thowv.reversiboard.skins;
 
+import com.thowv.reversiboard.BoardTile;
+import com.thowv.reversiboard.ReversiBoard;
+import com.thowv.reversiboard.events.BoardTileActivatedEvent;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Control;
 import javafx.scene.control.SkinBase;
 import javafx.scene.layout.*;
 
-class ReversiBoardSkin extends SkinBase {
-    ReversiBoardSkin(ReversiBoard reversiBoardControl) {
+public class ReversiBoardSkin extends SkinBase {
+    public ReversiBoardSkin(ReversiBoard reversiBoardControl) {
         super(reversiBoardControl);
 
         createBoard(reversiBoardControl.getBoardSize());
