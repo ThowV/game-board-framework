@@ -1,5 +1,7 @@
-package com.thowv.reversiboard;
+package com.thowv.reversiboard.skins;
 
+import com.thowv.reversiboard.BoardTile;
+import com.thowv.reversiboard.ReversiBoard;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
 import javafx.geometry.Pos;
@@ -7,30 +9,35 @@ import javafx.scene.control.Control;
 import javafx.scene.control.SkinBase;
 import javafx.scene.layout.*;
 
-class ReversiBoardSkin extends SkinBase {
-    ReversiBoardSkin(ReversiBoard reversiBoardControl) {
+public class ReversiBoardSkin extends SkinBase<ReversiBoard> {
+    private BoardTile[][] boardTiles;
+    private GridPane boardGridPane;
+    private int boardSize;
+
+    public ReversiBoardSkin(ReversiBoard reversiBoardControl) {
         super(reversiBoardControl);
 
-        createBoard(reversiBoardControl.getBoardSize());
+        boardSize = reversiBoardControl.getSize();
+        createBoard();
     }
 
-    private void createBoard(int boardSize) {
+    private void createBoard() {
         HBox horizontalCenterHBox = new HBox();
-        GridPane gridPane = new GridPane();
         VBox verticalCenterVBox = new VBox();
 
-        gridPane.setGridLinesVisible(true);
-        gridPane.setHgap(2);
-        gridPane.setVgap(2);
+        boardGridPane = new GridPane();
+        boardGridPane.getStyleClass().add("board");
+
+        refreshBoardTiles();
 
         // Alignment
         horizontalCenterHBox.setAlignment(Pos.CENTER); // This class extends HBox
         verticalCenterVBox.setAlignment(Pos.CENTER);
 
         // Sizing: horizontalCenterBox (this) and verticalCenterVBox
-        horizontalCenterHBox.setMinSize(boardSize * 10, boardSize * 10);
+        horizontalCenterHBox.setMinSize(boardSize * 30, boardSize * 30);
         HBox.setHgrow(horizontalCenterHBox, Priority.ALWAYS);
-        VBox.setVgrow(gridPane, Priority.ALWAYS);
+        VBox.setVgrow(boardGridPane, Priority.ALWAYS);
 
         // Sizing: verticalCenterVBox
         NumberBinding numberBinding = Bindings.min(horizontalCenterHBox.widthProperty(), horizontalCenterHBox.heightProperty());
@@ -40,12 +47,12 @@ class ReversiBoardSkin extends SkinBase {
         verticalCenterVBox.setMaxSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
         verticalCenterVBox.setFillWidth(true);
 
-        // Sizing: gridPane
+        // Sizing: boardGridPane
         for (int x = 0; x < boardSize; x++) {
             ColumnConstraints columnConstraints = new ColumnConstraints(Control.USE_PREF_SIZE,
                     Control.USE_COMPUTED_SIZE, Double.MAX_VALUE);
             columnConstraints.setHgrow(Priority.SOMETIMES);
-            gridPane.getColumnConstraints().add(columnConstraints);
+            boardGridPane.getColumnConstraints().add(columnConstraints);
         }
 
         for (int y = 0; y < boardSize; y++) {
@@ -53,22 +60,22 @@ class ReversiBoardSkin extends SkinBase {
                     Control.USE_COMPUTED_SIZE, Double.MAX_VALUE);
 
             rowConstraints.setVgrow(Priority.SOMETIMES);
-            gridPane.getRowConstraints().add(rowConstraints);
+            boardGridPane.getRowConstraints().add(rowConstraints);
         }
 
         // Connect objects
-        verticalCenterVBox.getChildren().add(gridPane);
+        verticalCenterVBox.getChildren().add(boardGridPane);
         horizontalCenterHBox.getChildren().add(verticalCenterVBox);
 
         // Add tiles
-        createTiles(gridPane, boardSize);
+        createTiles();
 
         // Gets forwarded to the ReversiBoard.java class. We add the created board
         getChildren().add(horizontalCenterHBox);
     }
 
-    private void createTiles(GridPane gridPane, int boardSize) {
-        // Add tiles to the reversiboard
+    private void createTiles() {
+        // Add tiles to the reversi board
         for (int x = 0; x < boardSize; x++) {
             for (int y = 0; y < boardSize; y++) {
                 BoardTile tile = new BoardTile(x, y);
@@ -76,8 +83,19 @@ class ReversiBoardSkin extends SkinBase {
                 GridPane.setColumnIndex(tile, x);
                 GridPane.setRowIndex(tile, y);
 
-                gridPane.getChildren().add(tile);
+                boardGridPane.getChildren().add(tile);
+                boardTiles[x][y] = tile;
             }
         }
+    }
+
+    public BoardTile getBoardTile(int xCord, int yCord) {
+        return boardTiles[xCord][yCord];
+    }
+
+    public void refreshBoardTiles() {
+        boardGridPane.getChildren().clear();
+        boardTiles = new BoardTile[boardSize][boardSize];
+        createTiles();
     }
 }

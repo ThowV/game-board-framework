@@ -1,5 +1,6 @@
 package com.thowv.reversiboard;
 
+import com.thowv.reversiboard.skins.ReversiBoardSkin;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 
@@ -18,7 +19,7 @@ public class ReversiBoard extends Control {
 
     @Override
     public String getUserAgentStylesheet() {
-        return ReversiBoard.class.getResource("/board-view.css").toExternalForm();
+        return ReversiBoard.class.getResource("/control-style.css").toExternalForm();
     }
 
     @Override
@@ -26,7 +27,25 @@ public class ReversiBoard extends Control {
         return new ReversiBoardSkin(this);
     }
 
-    int getBoardSize() {
+    private ReversiBoardSkin getBoardSkin() {
+        return (ReversiBoardSkin)getSkin();
+    }
+
+    // region Behavior
+    public void clear() {
+        getBoardSkin().refreshBoardTiles();
+    }
+
+    public int getSize() {
         return boardSize;
     }
+
+    public BoardTile getTile(int xCord, int yCord) {
+        return getBoardSkin().getBoardTile(xCord, yCord);
+    }
+
+    public void setTilePieceType(BoardTile.TilePieceType tilePieceType, int xCord, int yCord) {
+        getBoardSkin().getBoardTile(xCord, yCord).setTilePieceType(tilePieceType);
+    }
+    // endregion
 }
