@@ -10,15 +10,19 @@
     -fx-border-color    : #000000;
 }
 
-.stonePieceEmpty {
+.stonePieceInactive {
+    -fx-fill: radial-gradient(center 50% 50%, radius 90%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.stonePieceActive {
     -fx-fill: radial-gradient(center 50% 50%, radius 90%, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
-.stonePieceEmpty:hover {
+.stonePieceActive:hover {
     -fx-fill: rgba(255, 255, 255, 0.3);
 }
 
-.stonePieceEmpty:pressed {
+.stonePieceActive:pressed {
     -fx-fill: rgba(255, 255, 255, 0.5);
 }
 

@@ -16,8 +16,10 @@ public class BoardTileActivatedEvent extends Event {
     public BoardTileActivatedEvent(Object source, EventTarget target) {
         super(source, target, TILE_ACTIVATED);
 
-        this.xCord = ((BoardTile)target).getXCord();
-        this.yCord = ((BoardTile)target).getYCord();
+        BoardTile boardTile = (BoardTile)target;
+
+        this.xCord = boardTile.getXCord();
+        this.yCord = boardTile.getYCord();
     }
 
     public static final EventType<BoardTileActivatedEvent> TILE_ACTIVATED =

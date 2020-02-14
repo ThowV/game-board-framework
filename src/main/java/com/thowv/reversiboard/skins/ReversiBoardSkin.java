@@ -2,6 +2,7 @@ package com.thowv.reversiboard.skins;
 
 import com.thowv.reversiboard.BoardTile;
 import com.thowv.reversiboard.ReversiBoard;
+import com.thowv.reversiboard.behaviors.ReversiBoardBehavior;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
 import javafx.geometry.Pos;
@@ -10,25 +11,26 @@ import javafx.scene.control.SkinBase;
 import javafx.scene.layout.*;
 
 public class ReversiBoardSkin extends SkinBase<ReversiBoard> {
-    private BoardTile[][] boardTiles;
+    private ReversiBoard reversiBoardControl;
+    private ReversiBoardBehavior reversiBoardBehavior;
     private GridPane boardGridPane;
-    private int boardSize;
 
     public ReversiBoardSkin(ReversiBoard reversiBoardControl) {
         super(reversiBoardControl);
 
-        boardSize = reversiBoardControl.getSize();
+        this.reversiBoardControl = reversiBoardControl;
+        this.reversiBoardBehavior = reversiBoardControl.getReversiBoardBehavior();
+
         createBoard();
     }
 
     private void createBoard() {
+        int boardSize = reversiBoardControl.getSize();
         HBox horizontalCenterHBox = new HBox();
         VBox verticalCenterVBox = new VBox();
 
         boardGridPane = new GridPane();
         boardGridPane.getStyleClass().add("board");
-
-        refreshBoardTiles();
 
         // Alignment
         horizontalCenterHBox.setAlignment(Pos.CENTER); // This class extends HBox
@@ -67,14 +69,14 @@ public class ReversiBoardSkin extends SkinBase<ReversiBoard> {
         verticalCenterVBox.getChildren().add(boardGridPane);
         horizontalCenterHBox.getChildren().add(verticalCenterVBox);
 
-        // Add tiles
-        createTiles();
-
         // Gets forwarded to the ReversiBoard.java class. We add the created board
         getChildren().add(horizontalCenterHBox);
     }
 
-    private void createTiles() {
+    public BoardTile[][] createTiles(int boardSize) {
+        BoardTile[][] boardTiles = new BoardTile[boardSize][boardSize];
+        boardGridPane.getChildren().clear();
+
         // Add tiles to the reversi board
         for (int x = 0; x < boardSize; x++) {
             for (int y = 0; y < boardSize; y++) {
@@ -82,20 +84,18 @@ public class ReversiBoardSkin extends SkinBase<ReversiBoard> {
 
                 GridPane.setColumnIndex(tile, x);
                 GridPane.setRowIndex(tile, y);
-
                 boardGridPane.getChildren().add(tile);
+
                 boardTiles[x][y] = tile;
             }
         }
+
+        return boardTiles;
     }
 
-    public BoardTile getBoardTile(int xCord, int yCord) {
-        return boardTiles[xCord][yCord];
+    // region Getters, setters and behavior
+    public ReversiBoardBehavior getReversiBoardBehavior() {
+        return reversiBoardBehavior;
     }
-
-    public void refreshBoardTiles() {
-        boardGridPane.getChildren().clear();
-        boardTiles = new BoardTile[boardSize][boardSize];
-        createTiles();
-    }
+    // endregion
 }

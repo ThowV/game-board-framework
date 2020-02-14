@@ -21,18 +21,16 @@ public class Demo extends Application {
         primaryStage.show();
 
         // Showcasing behaviour
+        reversiBoard.start();
+
         reversiBoard.addEventHandler(BoardTileActivatedEvent.TILE_ACTIVATED,
                 e -> System.out.println("Tile x: " + e.getXCord() + "\tTile y: " + e.getYCord()));
 
         System.out.println(reversiBoard.getSize());
         System.out.println(reversiBoard.getTile(0, 0));
 
-        reversiBoard.clear();
-
         //reversiBoard.setTilePieceType(BoardTile.TilePieceType.WHITE, 0, 0);
         //reversiBoard.setTilePieceType(BoardTile.TilePieceType.BLACK, 1, 1);
-
-        //System.out.println((BoardTileSkin)((ReversiBoardSkin)reversiBoard.getSkin()).getBoardTile(0, 0).getSkin());
     }
 
     public static void main(String[] args) {
