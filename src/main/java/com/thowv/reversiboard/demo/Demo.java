@@ -29,12 +29,12 @@ public class Demo extends Application {
                     e1 -> System.out.println("Tile x: " + e1.getXCord() + "\tTile y: " + e1.getYCord()));
 
             System.out.println(reversiBoard.getSize());
-            System.out.println(reversiBoard.getTile(0, 0));
+            System.out.println(reversiBoard.getTile(0, 0).getTilePieceType());
 
-            reversiBoard.setTilePieceType(0, 0, BoardTile.TilePieceType.WHITE);
-            reversiBoard.setTilePieceType(1, 1, BoardTile.TilePieceType.BLACK);
-            reversiBoard.setTilePieceType(2, 2);
-            reversiBoard.setTilePieceType(3, 3);
+            //reversiBoard.setTilePieceType(0, 0, BoardTile.TilePieceType.WHITE);
+            //reversiBoard.setTilePieceType(1, 1, BoardTile.TilePieceType.BLACK);
+            //reversiBoard.setTilePieceType(2, 2);
+            //reversiBoard.setTilePieceType(3, 3);
         });
         pauseTransition.play();
     }

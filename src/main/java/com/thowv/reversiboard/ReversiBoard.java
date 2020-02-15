@@ -10,7 +10,7 @@ public class ReversiBoard extends Control {
 
     // region Constructors
     public ReversiBoard() {
-        this(10);
+        this(8);
     }
 
     public ReversiBoard(int size) {

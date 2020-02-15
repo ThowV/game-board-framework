@@ -12,7 +12,7 @@ public class BoardTile extends Control {
 
     // region Constructors
     public BoardTile(int xCord, int yCord) {
-        this(TilePieceType.ACTIVE, xCord, yCord);
+        this(TilePieceType.INACTIVE, xCord, yCord);
     }
 
     public BoardTile(TilePieceType tilePieceType, int xCord, int yCord) {

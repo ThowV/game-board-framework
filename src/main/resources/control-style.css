@@ -11,7 +11,8 @@
 }
 
 .stonePieceInactive {
-    -fx-fill: radial-gradient(center 50% 50%, radius 90%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%);
+    /*-fx-fill: radial-gradient(center 50% 50%, radius 90%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%);*/
+    -fx-fill: rgba(0, 0, 0, 0);
 }
 
 .stonePieceActive {
