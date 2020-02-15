@@ -7,6 +7,9 @@ import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.HashMap;
 
 public class ReversiBoardBehavior {
     private ReversiBoard reversiBoardControl;
@@ -72,14 +75,15 @@ public class ReversiBoardBehavior {
 
     private void determineActiveBoardTiles(BoardDirection boardDirection, BoardTile.TilePieceType colorTurn,
                                            int startXCord, int startYCord, boolean canBeActivated) {
-        int[] newCoordinates = determineCordsWithDir(boardDirection, startXCord, startYCord);
+        int[] newCoordinates = translateDirToCords(boardDirection, startXCord, startYCord);
         int newXCord = newCoordinates[0];
         int newYCord = newCoordinates[1];
 
         if (newXCord >= boardSize || newXCord < 0 || newYCord >= boardSize || newYCord < 0)
             return;
 
-        BoardTile.TilePieceType boardTilePieceType = boardTileReferences[newXCord][newYCord].getTilePieceType();
+        BoardTile boardTile = boardTileReferences[newCoordinates[0]][newCoordinates[1]];
+        BoardTile.TilePieceType boardTilePieceType = boardTile.getTilePieceType();
 
         if (boardTilePieceType == colorTurn || boardTilePieceType == BoardTile.TilePieceType.ACTIVE)
             return;
@@ -94,7 +98,7 @@ public class ReversiBoardBehavior {
         determineActiveBoardTiles(boardDirection, colorTurn, newXCord, newYCord, canBeActivated);
     }
 
-    private int[] determineCordsWithDir(BoardDirection boardDirection, int xCord, int yCord) {
+    private int[] translateDirToCords(BoardDirection boardDirection, int xCord, int yCord) {
         switch (boardDirection) {
             case W:
                 xCord -= 1;
@@ -126,6 +130,42 @@ public class ReversiBoardBehavior {
         }
 
         return new int[]{xCord, yCord};
+    }
+    // endregion
+
+    // region Flip board tiles from origin behavior
+    private void flipBoardTilesFromOrigin(int xCord, int yCord) {
+        for (BoardDirection boardDirection : BoardDirection.values()) {
+            flipBoardTilesFromOrigin(boardDirection, colorTurn, xCord, yCord);
+        }
+    }
+
+    private boolean flipBoardTilesFromOrigin(BoardDirection boardDirection, BoardTile.TilePieceType colorTurn,
+                                           int startXCord, int startYCord) {
+        int[] newCoordinates = translateDirToCords(boardDirection, startXCord, startYCord);
+        int newXCord = newCoordinates[0];
+        int newYCord = newCoordinates[1];
+
+        if (newXCord >= boardSize || newXCord < 0 || newYCord >= boardSize || newYCord < 0)
+            return false;
+
+        BoardTile boardTile = boardTileReferences[newCoordinates[0]][newCoordinates[1]];
+        BoardTile.TilePieceType boardTilePieceType = boardTile.getTilePieceType();
+
+        if (boardTilePieceType == BoardTile.TilePieceType.ACTIVE
+                || boardTilePieceType == BoardTile.TilePieceType.INACTIVE)
+            return false;
+        else if (boardTilePieceType == colorTurn)
+            return true;
+
+        boolean canBeFlipped = flipBoardTilesFromOrigin(boardDirection, colorTurn, newXCord, newYCord);
+
+        if (canBeFlipped) {
+            setTilePieceType(newXCord, newYCord, colorTurn, false);
+            return true;
+        }
+        else
+            return false;
     }
     // endregion
 
@@ -161,18 +201,25 @@ public class ReversiBoardBehavior {
 
     public void setTilePieceType(int xCord, int yCord, BoardTile.TilePieceType forcedTilePieceType,
                                  boolean determineActiveTiles) {
+        // Clear the board if this turn was not forced
         if (forcedTilePieceType == null)
             clearActiveBoardTiles();
 
+        // Determine what tile piece type to use
         BoardTile.TilePieceType tilePieceTypeToUse = forcedTilePieceType;
         if (tilePieceTypeToUse == null)
             tilePieceTypeToUse = colorTurn;
 
+        // Set the tile and all the tiles in between two colors to the correct type
         boardTileReferences[xCord][yCord].setTilePieceType(tilePieceTypeToUse);
+        if (determineActiveTiles)
+            flipBoardTilesFromOrigin(xCord, yCord);
 
+        // Flip the colorTurn variable for the next move
         if (forcedTilePieceType == null)
             colorTurn = flipColorTurn(colorTurn);
 
+        // Determine all possible active board tiles for the next move
         if (determineActiveTiles)
             determineActiveBoardTiles(colorTurn);
     }
