@@ -9,6 +9,7 @@ public class BoardTileActivatedEvent extends Event {
     private int xCord;
     private int yCord;
 
+    // region Constructors
     public BoardTileActivatedEvent() {
         super(TILE_ACTIVATED);
     }
@@ -21,10 +22,12 @@ public class BoardTileActivatedEvent extends Event {
         this.xCord = boardTile.getXCord();
         this.yCord = boardTile.getYCord();
     }
+    // endregion
 
     public static final EventType<BoardTileActivatedEvent> TILE_ACTIVATED =
             new EventType<>(Event.ANY, "TILE_ACTIVATED");
 
+    // region Overrides
     @Override
     public BoardTileActivatedEvent copyFor(Object newSource, EventTarget newTarget) {
         return (BoardTileActivatedEvent) super.copyFor(newSource, newTarget);
@@ -34,7 +37,9 @@ public class BoardTileActivatedEvent extends Event {
     public EventType<? extends BoardTileActivatedEvent> getEventType() {
         return (EventType<? extends BoardTileActivatedEvent>) super.getEventType();
     }
+    // endregion
 
+    // region Getters
     public int getXCord() {
         return xCord;
     }
@@ -42,4 +47,5 @@ public class BoardTileActivatedEvent extends Event {
     public int getYCord() {
         return yCord;
     }
+    // endregion
 }

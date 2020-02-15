@@ -3,11 +3,11 @@ package com.thowv.reversiboard.demo;
 import com.thowv.reversiboard.BoardTile;
 import com.thowv.reversiboard.events.BoardTileActivatedEvent;
 import com.thowv.reversiboard.ReversiBoard;
-import com.thowv.reversiboard.skins.BoardTileSkin;
-import com.thowv.reversiboard.skins.ReversiBoardSkin;
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class Demo extends Application {
 
@@ -23,14 +23,20 @@ public class Demo extends Application {
         // Showcasing behaviour
         reversiBoard.start();
 
-        reversiBoard.addEventHandler(BoardTileActivatedEvent.TILE_ACTIVATED,
-                e -> System.out.println("Tile x: " + e.getXCord() + "\tTile y: " + e.getYCord()));
+        PauseTransition pauseTransition = new PauseTransition(Duration.millis(100));
+        pauseTransition.setOnFinished(e -> {
+            reversiBoard.addEventHandler(BoardTileActivatedEvent.TILE_ACTIVATED,
+                    e1 -> System.out.println("Tile x: " + e1.getXCord() + "\tTile y: " + e1.getYCord()));
 
-        System.out.println(reversiBoard.getSize());
-        System.out.println(reversiBoard.getTile(0, 0));
+            System.out.println(reversiBoard.getSize());
+            System.out.println(reversiBoard.getTile(0, 0));
 
-        //reversiBoard.setTilePieceType(BoardTile.TilePieceType.WHITE, 0, 0);
-        //reversiBoard.setTilePieceType(BoardTile.TilePieceType.BLACK, 1, 1);
+            reversiBoard.setTilePieceType(0, 0, BoardTile.TilePieceType.WHITE);
+            reversiBoard.setTilePieceType(1, 1, BoardTile.TilePieceType.BLACK);
+            reversiBoard.setTilePieceType(2, 2);
+            reversiBoard.setTilePieceType(3, 3);
+        });
+        pauseTransition.play();
     }
 
     public static void main(String[] args) {

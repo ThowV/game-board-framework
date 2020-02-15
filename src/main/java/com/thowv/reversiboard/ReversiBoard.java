@@ -35,19 +35,18 @@ public class ReversiBoard extends Control {
         reversiBoardBehavior.refreshPopulateBoard();
     }
 
-    public void setTilePieceType(BoardTile.TilePieceType tilePieceType, int xCord, int yCord) {
-        BoardTile boardTile = reversiBoardBehavior.getBoardTileReference(xCord, yCord);
-        boardTile.setTilePieceType(tilePieceType);
+    public void setTilePieceType(int xCord, int yCord) {
+        reversiBoardBehavior.setTilePieceType(xCord, yCord);
+    }
+
+    public void setTilePieceType(int xCord, int yCord, BoardTile.TilePieceType tilePieceType) {
+        reversiBoardBehavior.setTilePieceType(xCord, yCord, tilePieceType);
     }
     // endregion
 
     // region Getters and setters
     public ReversiBoardSkin getReversiBoardSkin() {
         return (ReversiBoardSkin)getSkin();
-    }
-
-    public ReversiBoardBehavior getReversiBoardBehavior() {
-        return reversiBoardBehavior;
     }
 
     public int getSize() {

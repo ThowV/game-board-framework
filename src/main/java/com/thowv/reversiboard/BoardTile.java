@@ -8,12 +8,11 @@ import javafx.scene.control.Skin;
 
 public class BoardTile extends Control {
     public enum TilePieceType { INACTIVE, ACTIVE, WHITE, BLACK }
-
     private BoardTileBehavior boardTileBehavior;
 
     // region Constructors
     public BoardTile(int xCord, int yCord) {
-        this(TilePieceType.INACTIVE, xCord, yCord);
+        this(TilePieceType.ACTIVE, xCord, yCord);
     }
 
     public BoardTile(TilePieceType tilePieceType, int xCord, int yCord) {
@@ -27,10 +26,6 @@ public class BoardTile extends Control {
     protected Skin<?> createDefaultSkin() {
         return new BoardTileSkin(this);
     }
-    // endregion
-
-    // region Control behavior
-
     // endregion
 
     // region Getters and setters

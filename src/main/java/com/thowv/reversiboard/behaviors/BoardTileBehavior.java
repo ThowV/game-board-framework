@@ -1,6 +1,7 @@
 package com.thowv.reversiboard.behaviors;
 
 import com.thowv.reversiboard.BoardTile;
+import com.thowv.reversiboard.events.BoardTileActivatedEvent;
 
 public class BoardTileBehavior {
     private BoardTile boardTileControl;
@@ -8,17 +9,25 @@ public class BoardTileBehavior {
     private int xCord;
     private int yCord;
 
+    // region Constructors
     public BoardTileBehavior(BoardTile boardTileControl, BoardTile.TilePieceType tilePieceType, int xCord, int yCord) {
         this.boardTileControl = boardTileControl;
-        this.tilePieceType = BoardTile.TilePieceType.INACTIVE;
+        this.tilePieceType = tilePieceType;
         this.xCord = xCord;
         this.yCord = yCord;
     }
+    // endregion
 
-    public void onMouseClicked() {
-        setTilePieceType(BoardTile.TilePieceType.WHITE);
+    // region Events
+    public void onBoardTileClick() {
+        if (tilePieceType == BoardTile.TilePieceType.ACTIVE)
+            boardTileControl.fireEvent(
+                    new BoardTileActivatedEvent(boardTileControl.getBoardTileSkin(), boardTileControl)
+            );
     }
+    // endregion
 
+    // region Getters and setters
     public void setTilePieceType(BoardTile.TilePieceType tilePieceType) {
         this.tilePieceType = tilePieceType;
         boardTileControl.getBoardTileSkin().setTilePieceType(tilePieceType);
@@ -35,4 +44,5 @@ public class BoardTileBehavior {
     public int getYCord() {
         return yCord;
     }
+    // endregion
 }

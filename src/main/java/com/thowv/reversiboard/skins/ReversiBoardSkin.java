@@ -11,21 +11,18 @@ import javafx.scene.control.SkinBase;
 import javafx.scene.layout.*;
 
 public class ReversiBoardSkin extends SkinBase<ReversiBoard> {
-    private ReversiBoard reversiBoardControl;
-    private ReversiBoardBehavior reversiBoardBehavior;
     private GridPane boardGridPane;
 
+    // region Constructors
     public ReversiBoardSkin(ReversiBoard reversiBoardControl) {
         super(reversiBoardControl);
 
-        this.reversiBoardControl = reversiBoardControl;
-        this.reversiBoardBehavior = reversiBoardControl.getReversiBoardBehavior();
-
-        createBoard();
+        createBoard(reversiBoardControl.getSize());
     }
+    // endregion
 
-    private void createBoard() {
-        int boardSize = reversiBoardControl.getSize();
+    // region Skin building
+    private void createBoard(int boardSize) {
         HBox horizontalCenterHBox = new HBox();
         VBox verticalCenterVBox = new VBox();
 
@@ -91,11 +88,6 @@ public class ReversiBoardSkin extends SkinBase<ReversiBoard> {
         }
 
         return boardTiles;
-    }
-
-    // region Getters, setters and behavior
-    public ReversiBoardBehavior getReversiBoardBehavior() {
-        return reversiBoardBehavior;
     }
     // endregion
 }
