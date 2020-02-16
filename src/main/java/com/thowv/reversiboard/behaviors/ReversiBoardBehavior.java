@@ -1,27 +1,31 @@
 package com.thowv.reversiboard.behaviors;
 
+import com.thowv.reversiboard.AbstractReversiTurnEntity;
 import com.thowv.reversiboard.BoardTile;
 import com.thowv.reversiboard.ReversiBoard;
 import com.thowv.reversiboard.events.BoardTileActivatedEvent;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Enumeration;
-import java.util.HashMap;
+import java.util.*;
 
 public class ReversiBoardBehavior {
     private ReversiBoard reversiBoardControl;
+
+    public AbstractReversiTurnEntity[] turnEntities;
+    public int currTurnEntity;
+
     private int boardSize;
     private BoardTile[][] boardTileReferences;
-    private BoardTile.TilePieceType colorTurn;
 
     // region Constructors
-    public ReversiBoardBehavior(ReversiBoard reversiBoardControl, int boardSize) {
+    public ReversiBoardBehavior(ReversiBoard reversiBoardControl, int boardSize,
+                                AbstractReversiTurnEntity reversiEntity1, AbstractReversiTurnEntity reversiEntity2) {
+        if (reversiEntity1 != null && reversiEntity2 != null)
+            setTurnEntities(reversiEntity1, reversiEntity2);
+
         this.reversiBoardControl = reversiBoardControl;
         this.boardSize = boardSize;
-        this.colorTurn = BoardTile.TilePieceType.BLACK;
 
         reversiBoardControl.addEventHandler(
                 BoardTileActivatedEvent.TILE_ACTIVATED,
@@ -37,15 +41,15 @@ public class ReversiBoardBehavior {
         // Wait for board tile skins to load
         PauseTransition pauseTransition = new PauseTransition(Duration.millis(100));
         pauseTransition.setOnFinished(e -> {
-            setTilePieceType(3, 3, false);
-            setTilePieceType(4, 3, false);
-            setTilePieceType(4, 4, false);
-            setTilePieceType(3, 4, true);
+            setTilePieceType(3, 3);
+            setTilePieceType(4, 3);
+            setTilePieceType(4, 4);
+            setTilePieceType(3, 4);
         });
         pauseTransition.play();
     }
 
-    private BoardTile.TilePieceType flipColorTurn(BoardTile.TilePieceType colorTurn) {
+    private BoardTile.TilePieceType flipTilePieceType(BoardTile.TilePieceType colorTurn) {
         if (colorTurn == BoardTile.TilePieceType.WHITE)
             colorTurn = BoardTile.TilePieceType.BLACK;
         else
@@ -57,45 +61,47 @@ public class ReversiBoardBehavior {
     // region Determine active board tiles behavior
     private enum BoardDirection { W, NW, N, NE, E, SE, S, SW }
 
-    private void determineActiveBoardTiles(BoardTile.TilePieceType colorTurn) {
+    private void determineActiveBoardTiles(int turnIndex) {
         // Determine all board tiles that match the current colorTurn
-        ArrayList<BoardTile> colorMatchedBoardTiles = getBoardTilesByType(colorTurn);
+        ArrayList<BoardTile> colorMatchedBoardTiles = getBoardTilesByType(
+                turnEntities[turnIndex].getTilePieceType());
 
         for (BoardTile boardTile : colorMatchedBoardTiles) {
             for (BoardDirection boardDirection : BoardDirection.values()) {
-                determineActiveBoardTiles(boardDirection, colorTurn, boardTile.getXCord(), boardTile.getYCord());
+                determineActiveBoardTiles(boardDirection, turnIndex, boardTile.getXCord(), boardTile.getYCord());
             }
         }
     }
 
-    private void determineActiveBoardTiles(BoardDirection boardDirection, BoardTile.TilePieceType colorTurn,
-                                           int startXCord, int startYCord) {
-        determineActiveBoardTiles(boardDirection, colorTurn, startXCord, startYCord, false);
+    private void determineActiveBoardTiles(BoardDirection boardDirection, int turnIndex,
+                                           int startingXCord, int startingYCord) {
+        determineActiveBoardTiles(boardDirection, turnIndex, startingXCord, startingYCord, false);
     }
 
-    private void determineActiveBoardTiles(BoardDirection boardDirection, BoardTile.TilePieceType colorTurn,
-                                           int startXCord, int startYCord, boolean canBeActivated) {
-        int[] newCoordinates = translateDirToCords(boardDirection, startXCord, startYCord);
+    private void determineActiveBoardTiles(BoardDirection boardDirection, int turnIndex,
+                                           int startingXCord, int startingYCord, boolean canBeActivated) {
+        int[] newCoordinates = translateDirToCords(boardDirection, startingXCord, startingYCord);
         int newXCord = newCoordinates[0];
         int newYCord = newCoordinates[1];
 
         if (newXCord >= boardSize || newXCord < 0 || newYCord >= boardSize || newYCord < 0)
             return;
 
-        BoardTile boardTile = boardTileReferences[newCoordinates[0]][newCoordinates[1]];
-        BoardTile.TilePieceType boardTilePieceType = boardTile.getTilePieceType();
+        BoardTile.TilePieceType currentTilePieceType = boardTileReferences[newXCord][newYCord].getTilePieceType();
+        BoardTile.TilePieceType startingTilePieceType = turnEntities[turnIndex].getTilePieceType();
 
-        if (boardTilePieceType == colorTurn || boardTilePieceType == BoardTile.TilePieceType.ACTIVE)
+        if (currentTilePieceType == startingTilePieceType || currentTilePieceType == BoardTile.TilePieceType.ACTIVE)
             return;
-        else if (boardTilePieceType == flipColorTurn(colorTurn))
+        else if (currentTilePieceType == BoardTile.TilePieceType.INACTIVE && !canBeActivated)
+            return;
+        else if (currentTilePieceType == flipTilePieceType(startingTilePieceType))
             canBeActivated = true;
-        else if (boardTilePieceType == BoardTile.TilePieceType.INACTIVE
-                && canBeActivated) {
-            setTilePieceType(newXCord, newYCord, BoardTile.TilePieceType.ACTIVE, false);
+        else if (currentTilePieceType == BoardTile.TilePieceType.INACTIVE) {
+            setTilePieceType(newXCord, newYCord, BoardTile.TilePieceType.ACTIVE);
             return;
         }
 
-        determineActiveBoardTiles(boardDirection, colorTurn, newXCord, newYCord, canBeActivated);
+        determineActiveBoardTiles(boardDirection, turnIndex, newXCord, newYCord, canBeActivated);
     }
 
     private int[] translateDirToCords(BoardDirection boardDirection, int xCord, int yCord) {
@@ -134,13 +140,13 @@ public class ReversiBoardBehavior {
     // endregion
 
     // region Flip board tiles from origin behavior
-    private void flipBoardTilesFromOrigin(int xCord, int yCord) {
+    private void flipBoardTilesFromOrigin(int xCord, int yCord, int turnIndex) {
         for (BoardDirection boardDirection : BoardDirection.values()) {
-            flipBoardTilesFromOrigin(boardDirection, colorTurn, xCord, yCord);
+            flipBoardTilesFromOrigin(boardDirection, turnIndex, xCord, yCord);
         }
     }
 
-    private boolean flipBoardTilesFromOrigin(BoardDirection boardDirection, BoardTile.TilePieceType colorTurn,
+    private boolean flipBoardTilesFromOrigin(BoardDirection boardDirection, int turnIndex,
                                            int startXCord, int startYCord) {
         int[] newCoordinates = translateDirToCords(boardDirection, startXCord, startYCord);
         int newXCord = newCoordinates[0];
@@ -155,13 +161,13 @@ public class ReversiBoardBehavior {
         if (boardTilePieceType == BoardTile.TilePieceType.ACTIVE
                 || boardTilePieceType == BoardTile.TilePieceType.INACTIVE)
             return false;
-        else if (boardTilePieceType == colorTurn)
+        else if (boardTilePieceType == turnEntities[turnIndex].getTilePieceType())
             return true;
 
-        boolean canBeFlipped = flipBoardTilesFromOrigin(boardDirection, colorTurn, newXCord, newYCord);
+        boolean canBeFlipped = flipBoardTilesFromOrigin(boardDirection, turnIndex, newXCord, newYCord);
 
         if (canBeFlipped) {
-            setTilePieceType(newXCord, newYCord, colorTurn, false);
+            setTilePieceType(newXCord, newYCord, turnEntities[turnIndex].getTilePieceType());
             return true;
         }
         else
@@ -186,21 +192,22 @@ public class ReversiBoardBehavior {
     // endregion
 
     // region Getters and setters
-    // region Tile piece type setters
-    public void setTilePieceType(int xCord, int yCord) {
-        setTilePieceType(xCord, yCord, null, true);
+    public void setTurnEntities(AbstractReversiTurnEntity reversiEntity1, AbstractReversiTurnEntity reversiEntity2) {
+        turnEntities = new AbstractReversiTurnEntity[2];
+        currTurnEntity = 0;
+
+        turnEntities[0] = reversiEntity1;
+        turnEntities[1] = reversiEntity2;
+
+        System.out.println(Arrays.toString(turnEntities));
     }
 
-    public void setTilePieceType(int xCord, int yCord, boolean determineActiveTiles) {
-        setTilePieceType(xCord, yCord, null, determineActiveTiles);
+    // region Tile piece type setters
+    public void setTilePieceType(int xCord, int yCord) {
+        setTilePieceType(xCord, yCord, null);
     }
 
     public void setTilePieceType(int xCord, int yCord, BoardTile.TilePieceType forcedTilePieceType) {
-        setTilePieceType(xCord, yCord, forcedTilePieceType, true);
-    }
-
-    public void setTilePieceType(int xCord, int yCord, BoardTile.TilePieceType forcedTilePieceType,
-                                 boolean determineActiveTiles) {
         // Clear the board if this turn was not forced
         if (forcedTilePieceType == null)
             clearActiveBoardTiles();
@@ -208,20 +215,24 @@ public class ReversiBoardBehavior {
         // Determine what tile piece type to use
         BoardTile.TilePieceType tilePieceTypeToUse = forcedTilePieceType;
         if (tilePieceTypeToUse == null)
-            tilePieceTypeToUse = colorTurn;
+            tilePieceTypeToUse = turnEntities[currTurnEntity].getTilePieceType();
 
-        // Set the tile and all the tiles in between two colors to the correct type
+        // Set the tile to the correct type
         boardTileReferences[xCord][yCord].setTilePieceType(tilePieceTypeToUse);
-        if (determineActiveTiles)
-            flipBoardTilesFromOrigin(xCord, yCord);
 
-        // Flip the colorTurn variable for the next move
-        if (forcedTilePieceType == null)
-            colorTurn = flipColorTurn(colorTurn);
+        if (forcedTilePieceType == null) {
+            // Set all tiles in between two of the same types equal to this type
+            flipBoardTilesFromOrigin(xCord, yCord, currTurnEntity);
 
-        // Determine all possible active board tiles for the next move
-        if (determineActiveTiles)
-            determineActiveBoardTiles(colorTurn);
+            // Flip the current entity turn variable for the next turn
+            currTurnEntity ^= 1;
+
+            // Determine all possible active board tiles for the next turn
+            determineActiveBoardTiles(currTurnEntity);
+
+            // Tell the current entity to take its turn
+            turnEntities[currTurnEntity].takeTurn(reversiBoardControl);
+        }
     }
     // endregion
 

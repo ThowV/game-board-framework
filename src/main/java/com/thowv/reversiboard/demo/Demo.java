@@ -1,5 +1,6 @@
 package com.thowv.reversiboard.demo;
 
+import com.thowv.reversiboard.AbstractReversiTurnEntity;
 import com.thowv.reversiboard.BoardTile;
 import com.thowv.reversiboard.events.BoardTileActivatedEvent;
 import com.thowv.reversiboard.ReversiBoard;
@@ -21,6 +22,8 @@ public class Demo extends Application {
         primaryStage.show();
 
         // Showcasing behaviour
+        reversiBoard.setTurnEntities(new DemoEntity(BoardTile.TilePieceType.WHITE),
+                new DemoEntity(BoardTile.TilePieceType.BLACK));
         reversiBoard.start();
 
         PauseTransition pauseTransition = new PauseTransition(Duration.millis(100));
@@ -30,11 +33,6 @@ public class Demo extends Application {
 
             System.out.println(reversiBoard.getSize());
             System.out.println(reversiBoard.getTile(0, 0).getTilePieceType());
-
-            //reversiBoard.setTilePieceType(0, 0, BoardTile.TilePieceType.WHITE);
-            //reversiBoard.setTilePieceType(1, 1, BoardTile.TilePieceType.BLACK);
-            //reversiBoard.setTilePieceType(2, 2);
-            //reversiBoard.setTilePieceType(3, 3);
         });
         pauseTransition.play();
     }

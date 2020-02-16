@@ -14,7 +14,17 @@ public class ReversiBoard extends Control {
     }
 
     public ReversiBoard(int size) {
-        this.reversiBoardBehavior = new ReversiBoardBehavior(this, size);
+        this(size, null, null);
+    }
+
+    public ReversiBoard(AbstractReversiTurnEntity reversiTurnEntity1, AbstractReversiTurnEntity reversiTurnEntity2) {
+        this(8, reversiTurnEntity1, reversiTurnEntity2);
+    }
+
+    public ReversiBoard(int size,
+                        AbstractReversiTurnEntity reversiTurnEntity1, AbstractReversiTurnEntity reversiTurnEntity2) {
+        this.reversiBoardBehavior = new ReversiBoardBehavior(this, size,
+                reversiTurnEntity1, reversiTurnEntity2);
     }
     // endregion
 
@@ -35,16 +45,16 @@ public class ReversiBoard extends Control {
         reversiBoardBehavior.refreshPopulateBoard();
     }
 
-    public void setTilePieceType(int xCord, int yCord) {
+    public void activateBoardTile(int xCord, int yCord) {
         reversiBoardBehavior.setTilePieceType(xCord, yCord);
-    }
-
-    public void setTilePieceType(int xCord, int yCord, BoardTile.TilePieceType tilePieceType) {
-        reversiBoardBehavior.setTilePieceType(xCord, yCord, tilePieceType);
     }
     // endregion
 
     // region Getters and setters
+    public void setTurnEntities(AbstractReversiTurnEntity reversiTurnEntity1, AbstractReversiTurnEntity reversiTurnEntity2) {
+        reversiBoardBehavior.setTurnEntities(reversiTurnEntity1, reversiTurnEntity2);
+    }
+
     public ReversiBoardSkin getReversiBoardSkin() {
         return (ReversiBoardSkin)getSkin();
     }
