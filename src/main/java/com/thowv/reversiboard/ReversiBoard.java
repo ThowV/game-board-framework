@@ -5,6 +5,8 @@ import com.thowv.reversiboard.skins.ReversiBoardSkin;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 
+import java.util.ArrayList;
+
 public class ReversiBoard extends Control {
     private ReversiBoardBehavior reversiBoardBehavior;
 
@@ -65,6 +67,10 @@ public class ReversiBoard extends Control {
 
     public BoardTile getTile(int xCord, int yCord) {
         return reversiBoardBehavior.getBoardTileReference(xCord, yCord);
+    }
+
+    public ArrayList<BoardTile> getPossibleBoardTiles() {
+        return reversiBoardBehavior.getPossibleBoardTiles();
     }
     // endregion
 }
