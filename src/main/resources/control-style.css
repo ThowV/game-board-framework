@@ -10,13 +10,16 @@
     -fx-border-color    : #000000;
 }
 
-.stonePieceInactive {
-    /*-fx-fill: radial-gradient(center 50% 50%, radius 90%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%);*/
+.stonePieceHidden {
     -fx-fill: rgba(0, 0, 0, 0);
 }
 
+.stonePieceVisible {
+    -fx-fill: radial-gradient(center 50% 50%, radius 90%, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
 .stonePieceActive {
-    -fx-fill: radial-gradient(center 50% 50%, radius 90%, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 100%);
+    -fx-fill: radial-gradient(center 50% 50%, radius 90%, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
 .stonePieceActive:hover {

@@ -94,16 +94,19 @@ public class ReversiBoardBehavior {
 
         if (currentTilePieceType == startingTilePieceType || currentTilePieceType == BoardTile.TilePieceType.ACTIVE)
             return;
-        else if (currentTilePieceType == BoardTile.TilePieceType.INACTIVE && !canBeActivated)
+        else if (currentTilePieceType == BoardTile.TilePieceType.HIDDEN && !canBeActivated)
             return;
         else if (currentTilePieceType == flipTilePieceType(startingTilePieceType))
             canBeActivated = true;
-        else if (currentTilePieceType == BoardTile.TilePieceType.INACTIVE) {
+        else if (currentTilePieceType == BoardTile.TilePieceType.HIDDEN) {
+            possibleBoardTiles.clear();
             possibleBoardTiles.add(boardTileReferences[newXCord][newYCord]);
 
             // Visualize active tiles if the entity type is a player
             if (turnEntities[turnIndex].getEntityType() == AbstractReversiTurnEntity.EntityType.PLAYER)
                 setTilePieceType(newXCord, newYCord, BoardTile.TilePieceType.ACTIVE);
+            else
+                setTilePieceType(newXCord, newYCord, BoardTile.TilePieceType.VISIBLE);
 
             return;
         }
@@ -166,7 +169,7 @@ public class ReversiBoardBehavior {
         BoardTile.TilePieceType boardTilePieceType = boardTile.getTilePieceType();
 
         if (boardTilePieceType == BoardTile.TilePieceType.ACTIVE
-                || boardTilePieceType == BoardTile.TilePieceType.INACTIVE)
+                || boardTilePieceType == BoardTile.TilePieceType.HIDDEN)
             return false;
         else if (boardTilePieceType == turnEntities[turnIndex].getTilePieceType())
             return true;
@@ -182,12 +185,17 @@ public class ReversiBoardBehavior {
     }
     // endregion
 
-    private void clearActiveBoardTiles() {
+    private void clearBoardTileVisuals() {
+        ArrayList<BoardTile> typeMatchedBoardTiles;
+
         // Determine all board tiles that match the active enum
-        ArrayList<BoardTile> typeMatchedBoardTiles = getBoardTilesByType(BoardTile.TilePieceType.ACTIVE);
+        if (turnEntities[currTurnEntity].getEntityType() == AbstractReversiTurnEntity.EntityType.PLAYER)
+            typeMatchedBoardTiles = getBoardTilesByType(BoardTile.TilePieceType.ACTIVE);
+        else
+            typeMatchedBoardTiles = getBoardTilesByType(BoardTile.TilePieceType.VISIBLE);
 
         for (BoardTile boardTile : typeMatchedBoardTiles) {
-            boardTile.setTilePieceType(BoardTile.TilePieceType.INACTIVE);
+            boardTile.setTilePieceType(BoardTile.TilePieceType.HIDDEN);
         }
     }
     // endregion
@@ -217,7 +225,7 @@ public class ReversiBoardBehavior {
     public void setTilePieceType(int xCord, int yCord, BoardTile.TilePieceType forcedTilePieceType) {
         // Clear the board if this turn was not forced
         if (forcedTilePieceType == null)
-            clearActiveBoardTiles();
+            clearBoardTileVisuals();
 
         // Determine what tile piece type to use
         BoardTile.TilePieceType tilePieceTypeToUse = forcedTilePieceType;
