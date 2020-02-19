@@ -92,9 +92,10 @@ public class ReversiBoardBehavior {
         BoardTile.TilePieceType currentTilePieceType = boardTileReferences[newXCord][newYCord].getTilePieceType();
         BoardTile.TilePieceType startingTilePieceType = turnEntities[turnIndex].getTilePieceType();
 
-        if (currentTilePieceType == startingTilePieceType || currentTilePieceType == BoardTile.TilePieceType.ACTIVE)
-            return;
-        else if (currentTilePieceType == BoardTile.TilePieceType.HIDDEN && !canBeActivated)
+        if (currentTilePieceType == startingTilePieceType
+                || currentTilePieceType == BoardTile.TilePieceType.VISIBLE
+                || currentTilePieceType == BoardTile.TilePieceType.ACTIVE
+                || currentTilePieceType == BoardTile.TilePieceType.HIDDEN && !canBeActivated)
             return;
         else if (currentTilePieceType == flipTilePieceType(startingTilePieceType))
             canBeActivated = true;
