@@ -19,7 +19,7 @@ public class DemoAIEntity extends AbstractReversiTurnEntity {
     public void takeTurn(ReversiBoard reversiBoard) {
         System.out.println("Turn for: " + this);
 
-        PauseTransition pauseTransition = new PauseTransition(Duration.millis(2000));
+        PauseTransition pauseTransition = new PauseTransition(Duration.millis(3000));
         pauseTransition.setOnFinished(e -> {
             ArrayList<BoardTile> possibleBoardTiles = reversiBoard.getPossibleBoardTiles();
 

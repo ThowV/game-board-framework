@@ -43,10 +43,10 @@ public class ReversiBoardBehavior {
         // Wait for board tile skins to load
         PauseTransition pauseTransition = new PauseTransition(Duration.millis(100));
         pauseTransition.setOnFinished(e -> {
-            setTilePieceType(3, 3);
-            setTilePieceType(4, 3);
-            setTilePieceType(4, 4);
-            setTilePieceType(3, 4);
+            setTilePieceType(3, 3, true);
+            setTilePieceType(4, 3, true);
+            setTilePieceType(4, 4, true);
+            setTilePieceType(3, 4, true);
         });
         pauseTransition.play();
     }
@@ -213,16 +213,22 @@ public class ReversiBoardBehavior {
 
         turnEntities[0] = reversiEntity1;
         turnEntities[1] = reversiEntity2;
-
-        System.out.println(Arrays.toString(turnEntities));
     }
 
     // region Tile piece type setters
     public void setTilePieceType(int xCord, int yCord) {
-        setTilePieceType(xCord, yCord, null);
+        setTilePieceType(xCord, yCord, null, false);
     }
 
     public void setTilePieceType(int xCord, int yCord, BoardTile.TilePieceType forcedTilePieceType) {
+        setTilePieceType(xCord, yCord, forcedTilePieceType, false);
+    }
+
+    public void setTilePieceType(int xCord, int yCord, boolean denyTakeTurn) {
+        setTilePieceType(xCord, yCord, null, denyTakeTurn);
+    }
+
+    public void setTilePieceType(int xCord, int yCord, BoardTile.TilePieceType forcedTilePieceType, boolean denyTakeTurn) {
         // Clear the board if this turn was not forced
         if (forcedTilePieceType == null)
             clearBoardTileVisuals();
@@ -235,6 +241,7 @@ public class ReversiBoardBehavior {
         // Set the tile to the correct type
         boardTileReferences[xCord][yCord].setTilePieceType(tilePieceTypeToUse);
 
+        // If a type is forced it means that the placement is not done by a player or AI
         if (forcedTilePieceType == null) {
             // Set all tiles in between two of the same types equal to this type
             flipBoardTilesFromOrigin(xCord, yCord, currTurnEntity);
@@ -246,7 +253,8 @@ public class ReversiBoardBehavior {
             determinePossibleBoardTiles(currTurnEntity);
 
             // Tell the current entity to take its turn
-            turnEntities[currTurnEntity].takeTurn(reversiBoardControl);
+            if (!denyTakeTurn)
+                turnEntities[currTurnEntity].takeTurn(reversiBoardControl);
         }
     }
     // endregion

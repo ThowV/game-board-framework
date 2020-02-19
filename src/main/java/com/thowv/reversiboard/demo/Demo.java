@@ -16,11 +16,10 @@ public class Demo extends Application {
         ReversiBoard reversiBoard = new ReversiBoard();
 
         primaryStage.setScene(new Scene(reversiBoard));
-        primaryStage.setTitle("JavaFX Board Project");
+        primaryStage.setTitle("JavaFX Reversi Board Project");
 
         primaryStage.show();
 
-        // Showcasing behaviour
         reversiBoard.setTurnEntities(
                 new DemoPlayerEntity(BoardTile.TilePieceType.WHITE),
                 new DemoAIEntity(BoardTile.TilePieceType.BLACK)
