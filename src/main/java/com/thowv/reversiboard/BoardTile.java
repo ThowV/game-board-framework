@@ -2,17 +2,16 @@ package com.thowv.reversiboard;
 
 import com.thowv.reversiboard.behaviors.BoardTileBehavior;
 import com.thowv.reversiboard.skins.BoardTileSkin;
-import com.thowv.reversiboard.skins.ReversiBoardSkin;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 
 public class BoardTile extends Control {
-    public enum TilePieceType { INACTIVE, ACTIVE, WHITE, BLACK }
+    public enum TilePieceType {HIDDEN, VISIBLE, ACTIVE, WHITE, BLACK }
     private BoardTileBehavior boardTileBehavior;
 
     // region Constructors
     public BoardTile(int xCord, int yCord) {
-        this(TilePieceType.INACTIVE, xCord, yCord);
+        this(TilePieceType.HIDDEN, xCord, yCord);
     }
 
     public BoardTile(TilePieceType tilePieceType, int xCord, int yCord) {

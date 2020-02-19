@@ -2,7 +2,6 @@ package com.thowv.reversiboard.skins;
 
 import com.thowv.reversiboard.BoardTile;
 import com.thowv.reversiboard.behaviors.BoardTileBehavior;
-import com.thowv.reversiboard.events.BoardTileActivatedEvent;
 import javafx.beans.binding.Bindings;
 import javafx.scene.control.SkinBase;
 import javafx.scene.layout.Pane;
@@ -48,18 +47,16 @@ public class BoardTileSkin extends SkinBase<BoardTile> {
     public void setTilePieceType(BoardTile.TilePieceType tilePieceType) {
         tilePiece.getStyleClass().clear();
 
-        if (tilePieceType == BoardTile.TilePieceType.INACTIVE)
-            tilePiece.getStyleClass().add("stonePieceInactive");
+        if (tilePieceType == BoardTile.TilePieceType.HIDDEN)
+            tilePiece.getStyleClass().add("stonePieceHidden");
+        else if (tilePieceType == BoardTile.TilePieceType.VISIBLE)
+            tilePiece.getStyleClass().add("stonePieceVisible");
         else if (tilePieceType == BoardTile.TilePieceType.ACTIVE)
             tilePiece.getStyleClass().add("stonePieceActive");
         else if (tilePieceType == BoardTile.TilePieceType.BLACK)
             tilePiece.getStyleClass().add("stonePieceBlack");
         else if (tilePieceType == BoardTile.TilePieceType.WHITE)
             tilePiece.getStyleClass().add("stonePieceWhite");
-    }
-
-    public Circle getTilePiece() {
-        return tilePiece;
     }
     // endregion
 }
