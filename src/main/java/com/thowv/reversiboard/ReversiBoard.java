@@ -44,11 +44,15 @@ public class ReversiBoard extends Control {
 
     // region Control behavior
     public void start() {
-        reversiBoardBehavior.refreshPopulateBoard();
+        reversiBoardBehavior.refreshBoard();
     }
 
     public void activateBoardTile(int xCord, int yCord) {
         reversiBoardBehavior.setTilePieceType(xCord, yCord);
+    }
+
+    public void visualizePossibleBoardTiles(BoardTile.TilePieceType tilePieceType) {
+        reversiBoardBehavior.visualizePossibleBoardTiles(tilePieceType);
     }
     // endregion
 
@@ -66,7 +70,7 @@ public class ReversiBoard extends Control {
     }
 
     public BoardTile getTile(int xCord, int yCord) {
-        return reversiBoardBehavior.getBoardTileReference(xCord, yCord);
+        return reversiBoardBehavior.getBoardTiles(xCord, yCord);
     }
 
     public ArrayList<BoardTile> getPossibleBoardTiles() {

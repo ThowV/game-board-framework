@@ -1,5 +1,7 @@
 package com.thowv.reversiboard;
 
+import com.thowv.reversiboard.events.BoardTileActivatedEvent;
+
 public abstract class AbstractReversiTurnEntity {
     public enum EntityType { PLAYER, AI };
     private EntityType entityType;
@@ -11,6 +13,8 @@ public abstract class AbstractReversiTurnEntity {
     }
 
     public abstract void takeTurn(ReversiBoard reversiBoard);
+
+    public abstract void tilePressed(ReversiBoard reversiBoard, BoardTileActivatedEvent e);
 
     public EntityType getEntityType() {
         return entityType;
