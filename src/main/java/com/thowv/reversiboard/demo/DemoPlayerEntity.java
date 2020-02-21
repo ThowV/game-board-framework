@@ -12,11 +12,14 @@ public class DemoPlayerEntity extends AbstractReversiTurnEntity {
 
     @Override
     public void takeTurn(ReversiBoard reversiBoard) {
-        reversiBoard.visualizePossibleBoardTiles(BoardTile.TilePieceType.ACTIVE);
+        if (reversiBoard.getPossibleBoardTiles().size() != 0)
+            reversiBoard.visualizePossibleBoardTiles(BoardTile.TilePieceType.ACTIVE);
+        else
+            reversiBoard.passTurn();
     }
 
     @Override
     public void tilePressed(ReversiBoard reversiBoard, BoardTileActivatedEvent e) {
-        reversiBoard.activateBoardTile(e.getXCord(), e.getYCord());
+        reversiBoard.takeTurn(e.getXCord(), e.getYCord());
     }
 }

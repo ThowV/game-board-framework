@@ -47,8 +47,12 @@ public class ReversiBoard extends Control {
         reversiBoardBehavior.refreshBoard();
     }
 
-    public void activateBoardTile(int xCord, int yCord) {
-        reversiBoardBehavior.setTilePieceType(xCord, yCord);
+    public void passTurn() {
+        reversiBoardBehavior.passTurn();
+    }
+
+    public void takeTurn(int xCord, int yCord) {
+        reversiBoardBehavior.takeTurn(xCord, yCord);
     }
 
     public void visualizePossibleBoardTiles(BoardTile.TilePieceType tilePieceType) {

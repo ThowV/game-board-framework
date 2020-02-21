@@ -17,7 +17,12 @@ public class DemoAIEntity extends AbstractReversiTurnEntity {
 
     @Override
     public void takeTurn(ReversiBoard reversiBoard) {
-        reversiBoard.visualizePossibleBoardTiles(BoardTile.TilePieceType.VISIBLE);
+        if (reversiBoard.getPossibleBoardTiles().size() != 0)
+            reversiBoard.visualizePossibleBoardTiles(BoardTile.TilePieceType.VISIBLE);
+        else {
+            reversiBoard.passTurn();
+            return;
+        }
 
         PauseTransition pauseTransition = new PauseTransition(Duration.millis(2000));
         pauseTransition.setOnFinished(e -> {
@@ -29,7 +34,7 @@ public class DemoAIEntity extends AbstractReversiTurnEntity {
 
             BoardTile boardTile = possibleBoardTiles.get(randomNum);
 
-            reversiBoard.activateBoardTile(boardTile.getXCord(), boardTile.getYCord());
+            reversiBoard.takeTurn(boardTile.getXCord(), boardTile.getYCord());
         });
         pauseTransition.play();
     }
