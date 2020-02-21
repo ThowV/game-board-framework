@@ -5,6 +5,7 @@ import com.thowv.reversiboard.BoardTile;
 import com.thowv.reversiboard.ReversiBoard;
 import com.thowv.reversiboard.events.BoardTileActivatedEvent;
 import com.thowv.reversiboard.events.ReversiGameEndedEvent;
+import com.thowv.reversiboard.events.ReversiTurnSwitchedEvent;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
@@ -57,17 +58,28 @@ public class ReversiBoardBehavior {
     }
 
     private void nextTurn() {
+        AbstractReversiTurnEntity pastTurnEntity = turnEntities[currTurnEntity];
+
+        // Determine the action taken past turn
+        ReversiTurnSwitchedEvent.TurnAction turnAction = ReversiTurnSwitchedEvent.TurnAction.TURN_TAKEN;
+
+        if (passAmount == 1)
+            turnAction = ReversiTurnSwitchedEvent.TurnAction.TURN_PASSED;
+
         // Flip the current entity turn variable for the next turn
         currTurnEntity ^= 1;
 
-        if (getBoardTilesOfColor().size() == boardSize * boardSize) {
+        if (getBoardTilesOfColor().size() == boardSize * boardSize)
             initiateEnd();
-            return;
+        else {
+            reversiBoardControl.fireEvent(
+                    new ReversiTurnSwitchedEvent(this, reversiBoardControl,
+                            pastTurnEntity, turnAction, turnEntities[currTurnEntity])
+            );
+
+            determinePossibleBoardTiles();
+            getCurrentTurnEntity().takeTurn(reversiBoardControl);
         }
-
-
-        determinePossibleBoardTiles();
-        getCurrentTurnEntity().takeTurn(reversiBoardControl);
     }
     // endregion
 

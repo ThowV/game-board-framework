@@ -4,6 +4,7 @@ import com.thowv.reversiboard.BoardTile;
 import com.thowv.reversiboard.events.BoardTileActivatedEvent;
 import com.thowv.reversiboard.ReversiBoard;
 import com.thowv.reversiboard.events.ReversiGameEndedEvent;
+import com.thowv.reversiboard.events.ReversiTurnSwitchedEvent;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -18,6 +19,11 @@ public class Demo extends Application {
 
         reversiBoard.addEventHandler(ReversiGameEndedEvent.GAME_ENDED,
                 e -> System.out.println("Game ended, the winner is: " + e.getWinningTurnEntity()));
+
+        reversiBoard.addEventHandler(ReversiTurnSwitchedEvent.TURN_SWITCHED,
+                e -> System.out.println("Turn switched \n\tfrom " + e.getPastTurnEntity()
+                        + " \n\tto " + e.getNextTurnEntity()
+                        + " \n\twith action " + e.getTurnAction()));
 
         System.out.println(reversiBoard.getSize());
         System.out.println(reversiBoard.getTile(0, 0).getTilePieceType());
