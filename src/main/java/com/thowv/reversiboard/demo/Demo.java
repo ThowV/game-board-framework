@@ -3,6 +3,7 @@ package com.thowv.reversiboard.demo;
 import com.thowv.reversiboard.BoardTile;
 import com.thowv.reversiboard.events.BoardTileActivatedEvent;
 import com.thowv.reversiboard.ReversiBoard;
+import com.thowv.reversiboard.events.ReversiGameEndedEvent;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -13,7 +14,10 @@ public class Demo extends Application {
         ReversiBoard reversiBoard = startReversiOption1(primaryStage);
 
         reversiBoard.addEventHandler(BoardTileActivatedEvent.TILE_ACTIVATED,
-                e1 -> System.out.println("Tile x: " + e1.getXCord() + "\tTile y: " + e1.getYCord()));
+                e -> System.out.println("Tile x: " + e.getXCord() + "\tTile y: " + e.getYCord()));
+
+        reversiBoard.addEventHandler(ReversiGameEndedEvent.GAME_ENDED,
+                e -> System.out.println("Game ended, the winner is: " + e.getWinningTurnEntity()));
 
         System.out.println(reversiBoard.getSize());
         System.out.println(reversiBoard.getTile(0, 0).getTilePieceType());

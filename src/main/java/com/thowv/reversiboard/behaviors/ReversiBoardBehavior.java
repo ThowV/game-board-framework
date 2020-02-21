@@ -4,6 +4,7 @@ import com.thowv.reversiboard.AbstractReversiTurnEntity;
 import com.thowv.reversiboard.BoardTile;
 import com.thowv.reversiboard.ReversiBoard;
 import com.thowv.reversiboard.events.BoardTileActivatedEvent;
+import com.thowv.reversiboard.events.ReversiGameEndedEvent;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
@@ -20,7 +21,6 @@ public class ReversiBoardBehavior {
     private ArrayList<BoardTile> possibleBoardTiles;
 
     private byte passAmount;
-
 
     // region Constructors
     public ReversiBoardBehavior(ReversiBoard reversiBoardControl, int boardSize,
@@ -51,14 +51,20 @@ public class ReversiBoardBehavior {
         passAmount += 1;
 
         if (passAmount == 2)
-            System.out.println("pass event");
+            initiateEnd();
         else
             nextTurn();
     }
 
-    public void nextTurn() {
+    private void nextTurn() {
         // Flip the current entity turn variable for the next turn
         currTurnEntity ^= 1;
+
+        if (getBoardTilesOfColor().size() == boardSize * boardSize) {
+            initiateEnd();
+            return;
+        }
+
 
         determinePossibleBoardTiles();
         getCurrentTurnEntity().takeTurn(reversiBoardControl);
@@ -233,6 +239,26 @@ public class ReversiBoardBehavior {
             boardTile.setTilePieceType(BoardTile.TilePieceType.HIDDEN);
         }
     }
+
+    private void initiateEnd() {
+        ArrayList<BoardTile> whiteBoardTiles = getBoardTilesByType(BoardTile.TilePieceType.WHITE);
+        ArrayList<BoardTile> blackBoardTiles = getBoardTilesByType(BoardTile.TilePieceType.BLACK);
+
+        AbstractReversiTurnEntity winningTurnEntity = null;
+
+        // Determine the winner
+        for (AbstractReversiTurnEntity turnEntity : turnEntities) {
+            if (whiteBoardTiles.size() > blackBoardTiles.size()
+                    && turnEntity.getTilePieceType() == BoardTile.TilePieceType.WHITE
+                    || (blackBoardTiles.size() > whiteBoardTiles.size()
+                    && turnEntity.getTilePieceType() == BoardTile.TilePieceType.BLACK))
+                winningTurnEntity = turnEntity;
+        }
+
+        reversiBoardControl.fireEvent(
+                new ReversiGameEndedEvent(this, reversiBoardControl, winningTurnEntity)
+        );
+    }
     // endregion
 
     // region Getters and setters
@@ -264,6 +290,14 @@ public class ReversiBoardBehavior {
     }
     // endregion
 
+    public BoardTile getBoardTiles(int xCord, int yCord) {
+        return boardTiles[xCord][yCord];
+    }
+
+    public ArrayList<BoardTile> getPossibleBoardTiles() {
+        return possibleBoardTiles;
+    }
+
     private ArrayList<BoardTile> getBoardTilesByType(BoardTile.TilePieceType tilePieceType) {
         ArrayList<BoardTile> typeMatchedBoardTiles = new ArrayList<>();
 
@@ -277,16 +311,21 @@ public class ReversiBoardBehavior {
         return typeMatchedBoardTiles;
     }
 
-    public BoardTile getBoardTiles(int xCord, int yCord) {
-        return boardTiles[xCord][yCord];
+    public ArrayList<BoardTile> getBoardTilesOfColor() {
+        ArrayList<BoardTile> colorMatchedBoardTiles = new ArrayList<>();
+
+        for (BoardTile[] boardTilesX : boardTiles) {
+            for (BoardTile boardTile : boardTilesX) {
+                if (boardTile.isOfColor())
+                    colorMatchedBoardTiles.add(boardTile);
+            }
+        }
+
+        return colorMatchedBoardTiles;
     }
 
     public int getBoardSize() {
         return boardSize;
-    }
-
-    public ArrayList<BoardTile> getPossibleBoardTiles() {
-        return possibleBoardTiles;
     }
     // endregion
 }

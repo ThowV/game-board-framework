@@ -6,7 +6,7 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 
 public class BoardTile extends Control {
-    public enum TilePieceType {HIDDEN, VISIBLE, ACTIVE, WHITE, BLACK }
+    public enum TilePieceType { HIDDEN, VISIBLE, ACTIVE, WHITE, BLACK }
     private BoardTileBehavior boardTileBehavior;
 
     // region Constructors
@@ -50,6 +50,10 @@ public class BoardTile extends Control {
 
     public TilePieceType getTilePieceType() {
         return boardTileBehavior.getTilePieceType();
+    }
+
+    public boolean isOfColor() {
+        return boardTileBehavior.isOfColor();
     }
     // endregion
 }

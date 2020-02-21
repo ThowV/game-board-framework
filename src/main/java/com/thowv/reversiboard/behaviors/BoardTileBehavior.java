@@ -6,6 +6,7 @@ import com.thowv.reversiboard.events.BoardTileActivatedEvent;
 public class BoardTileBehavior {
     private BoardTile boardTileControl;
     private BoardTile.TilePieceType tilePieceType;
+    private boolean ofColor = false;
     private int xCord;
     private int yCord;
 
@@ -22,7 +23,7 @@ public class BoardTileBehavior {
     public void onBoardTileClick() {
         if (tilePieceType == BoardTile.TilePieceType.ACTIVE)
             boardTileControl.fireEvent(
-                    new BoardTileActivatedEvent(boardTileControl.getBoardTileSkin(), boardTileControl)
+                    new BoardTileActivatedEvent(this, boardTileControl)
             );
     }
     // endregion
@@ -31,10 +32,16 @@ public class BoardTileBehavior {
     public void setTilePieceType(BoardTile.TilePieceType tilePieceType) {
         this.tilePieceType = tilePieceType;
         boardTileControl.getBoardTileSkin().setTilePieceType(tilePieceType);
+
+        ofColor = tilePieceType == BoardTile.TilePieceType.WHITE || tilePieceType == BoardTile.TilePieceType.BLACK;
     }
 
     public BoardTile.TilePieceType getTilePieceType() {
         return tilePieceType;
+    }
+
+    public boolean isOfColor() {
+        return ofColor;
     }
 
     public int getXCord() {
