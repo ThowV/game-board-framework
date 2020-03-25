@@ -1,0 +1,1 @@
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.thowv.javafxcomps/reversi-board/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.thowv.javafxcomps/reversi-board)
