@@ -1,15 +1,15 @@
-package com.thowv.reversiboard.demo;
+package com.thowv.javafx.reversiboard.example;
 
-import com.thowv.reversiboard.BoardTile;
-import com.thowv.reversiboard.events.BoardTileActivatedEvent;
-import com.thowv.reversiboard.ReversiBoard;
-import com.thowv.reversiboard.events.ReversiGameEndedEvent;
-import com.thowv.reversiboard.events.ReversiTurnSwitchedEvent;
+import com.thowv.javafx.reversiboard.BoardTile;
+import com.thowv.javafx.reversiboard.ReversiBoard;
+import com.thowv.javafx.reversiboard.events.BoardTileActivatedEvent;
+import com.thowv.javafx.reversiboard.events.ReversiGameEndedEvent;
+import com.thowv.javafx.reversiboard.events.ReversiTurnSwitchedEvent;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Demo extends Application {
+public class Example extends Application {
     @Override
     public void start(Stage primaryStage) {
         ReversiBoard reversiBoard = startReversiOption1(primaryStage);
@@ -31,8 +31,8 @@ public class Demo extends Application {
 
     private ReversiBoard startReversiOption1(Stage primaryStage) {
         ReversiBoard reversiBoard = new ReversiBoard(
-                new DemoPlayerEntity(BoardTile.TilePieceType.WHITE),
-                new DemoAIEntity(BoardTile.TilePieceType.BLACK)
+                new ExamplePlayerEntity(BoardTile.TilePieceType.WHITE),
+                new ExampleAIEntity(BoardTile.TilePieceType.BLACK)
         );
 
         primaryStage.setScene(new Scene(reversiBoard));
@@ -52,8 +52,8 @@ public class Demo extends Application {
         primaryStage.show();
 
         reversiBoard.setTurnEntities(
-                new DemoPlayerEntity(BoardTile.TilePieceType.WHITE),
-                new DemoAIEntity(BoardTile.TilePieceType.BLACK)
+                new ExamplePlayerEntity(BoardTile.TilePieceType.WHITE),
+                new ExampleAIEntity(BoardTile.TilePieceType.BLACK)
         );
 
         reversiBoard.start();

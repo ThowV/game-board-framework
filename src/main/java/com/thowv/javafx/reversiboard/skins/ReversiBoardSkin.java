@@ -1,8 +1,7 @@
-package com.thowv.reversiboard.skins;
+package com.thowv.javafx.reversiboard.skins;
 
-import com.thowv.reversiboard.BoardTile;
-import com.thowv.reversiboard.ReversiBoard;
-import com.thowv.reversiboard.behaviors.ReversiBoardBehavior;
+import com.thowv.javafx.reversiboard.BoardTile;
+import com.thowv.javafx.reversiboard.ReversiBoard;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
 import javafx.geometry.Pos;

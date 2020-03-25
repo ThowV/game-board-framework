@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.thowv</groupId>
+    <groupId>com.thowv.javafx</groupId>
     <artifactId>javafx-reversi-board</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -92,7 +92,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>com.thowv.reversiboard.demo.Demo</mainClass>
+                    <mainClass>com.thowv.javafx.reversiboard.example.Example</mainClass>
                 </configuration>
             </plugin>
 
@@ -110,7 +110,7 @@
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.thowv.reversiboard.demo.DemoLauncher</mainClass>
+                                    <mainClass>com.thowv.javafx.reversiboard.example.ExampleLauncher</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

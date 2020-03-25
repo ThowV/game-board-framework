@@ -1,17 +1,17 @@
-package com.thowv.reversiboard.demo;
+package com.thowv.javafx.reversiboard.example;
 
-import com.thowv.reversiboard.AbstractReversiTurnEntity;
-import com.thowv.reversiboard.BoardTile;
-import com.thowv.reversiboard.ReversiBoard;
-import com.thowv.reversiboard.events.BoardTileActivatedEvent;
+import com.thowv.javafx.reversiboard.AbstractReversiTurnEntity;
+import com.thowv.javafx.reversiboard.BoardTile;
+import com.thowv.javafx.reversiboard.ReversiBoard;
+import com.thowv.javafx.reversiboard.events.BoardTileActivatedEvent;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class DemoAIEntity extends AbstractReversiTurnEntity {
-    public DemoAIEntity(BoardTile.TilePieceType tilePieceType) {
+public class ExampleAIEntity extends AbstractReversiTurnEntity {
+    public ExampleAIEntity(BoardTile.TilePieceType tilePieceType) {
         super(EntityType.AI, tilePieceType);
     }
 

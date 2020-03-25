@@ -1,7 +1,7 @@
-package com.thowv.reversiboard.behaviors;
+package com.thowv.javafx.reversiboard.behaviors;
 
-import com.thowv.reversiboard.BoardTile;
-import com.thowv.reversiboard.events.BoardTileActivatedEvent;
+import com.thowv.javafx.reversiboard.BoardTile;
+import com.thowv.javafx.reversiboard.events.BoardTileActivatedEvent;
 
 public class BoardTileBehavior {
     private BoardTile boardTileControl;

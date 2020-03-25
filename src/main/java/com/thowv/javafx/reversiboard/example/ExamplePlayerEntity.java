@@ -1,12 +1,12 @@
-package com.thowv.reversiboard.demo;
+package com.thowv.javafx.reversiboard.example;
 
-import com.thowv.reversiboard.AbstractReversiTurnEntity;
-import com.thowv.reversiboard.BoardTile;
-import com.thowv.reversiboard.ReversiBoard;
-import com.thowv.reversiboard.events.BoardTileActivatedEvent;
+import com.thowv.javafx.reversiboard.AbstractReversiTurnEntity;
+import com.thowv.javafx.reversiboard.BoardTile;
+import com.thowv.javafx.reversiboard.ReversiBoard;
+import com.thowv.javafx.reversiboard.events.BoardTileActivatedEvent;
 
-public class DemoPlayerEntity extends AbstractReversiTurnEntity {
-    public DemoPlayerEntity(BoardTile.TilePieceType tilePieceType) {
+public class ExamplePlayerEntity extends AbstractReversiTurnEntity {
+    public ExamplePlayerEntity(BoardTile.TilePieceType tilePieceType) {
         super(EntityType.PLAYER, tilePieceType);
     }
 

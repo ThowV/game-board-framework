@@ -1,6 +1,6 @@
-package com.thowv.reversiboard.events;
+package com.thowv.javafx.reversiboard.events;
 
-import com.thowv.reversiboard.BoardTile;
+import com.thowv.javafx.reversiboard.BoardTile;
 import javafx.event.Event;
 import javafx.event.EventTarget;
 import javafx.event.EventType;

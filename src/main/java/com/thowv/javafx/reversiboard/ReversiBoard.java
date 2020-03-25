@@ -1,7 +1,7 @@
-package com.thowv.reversiboard;
+package com.thowv.javafx.reversiboard;
 
-import com.thowv.reversiboard.behaviors.ReversiBoardBehavior;
-import com.thowv.reversiboard.skins.ReversiBoardSkin;
+import com.thowv.javafx.reversiboard.behaviors.ReversiBoardBehavior;
+import com.thowv.javafx.reversiboard.skins.ReversiBoardSkin;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 

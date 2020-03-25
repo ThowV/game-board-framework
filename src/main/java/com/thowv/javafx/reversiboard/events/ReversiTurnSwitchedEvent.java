@@ -1,6 +1,6 @@
-package com.thowv.reversiboard.events;
+package com.thowv.javafx.reversiboard.events;
 
-import com.thowv.reversiboard.AbstractReversiTurnEntity;
+import com.thowv.javafx.reversiboard.AbstractReversiTurnEntity;
 import javafx.event.Event;
 import javafx.event.EventTarget;
 import javafx.event.EventType;

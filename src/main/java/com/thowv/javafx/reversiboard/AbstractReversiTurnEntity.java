@@ -1,6 +1,6 @@
-package com.thowv.reversiboard;
+package com.thowv.javafx.reversiboard;
 
-import com.thowv.reversiboard.events.BoardTileActivatedEvent;
+import com.thowv.javafx.reversiboard.events.BoardTileActivatedEvent;
 
 public abstract class AbstractReversiTurnEntity {
     public enum EntityType { PLAYER, AI };

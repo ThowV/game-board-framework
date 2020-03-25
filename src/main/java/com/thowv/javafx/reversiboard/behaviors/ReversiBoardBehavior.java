@@ -1,11 +1,11 @@
-package com.thowv.reversiboard.behaviors;
+package com.thowv.javafx.reversiboard.behaviors;
 
-import com.thowv.reversiboard.AbstractReversiTurnEntity;
-import com.thowv.reversiboard.BoardTile;
-import com.thowv.reversiboard.ReversiBoard;
-import com.thowv.reversiboard.events.BoardTileActivatedEvent;
-import com.thowv.reversiboard.events.ReversiGameEndedEvent;
-import com.thowv.reversiboard.events.ReversiTurnSwitchedEvent;
+import com.thowv.javafx.reversiboard.AbstractReversiTurnEntity;
+import com.thowv.javafx.reversiboard.BoardTile;
+import com.thowv.javafx.reversiboard.ReversiBoard;
+import com.thowv.javafx.reversiboard.events.BoardTileActivatedEvent;
+import com.thowv.javafx.reversiboard.events.ReversiGameEndedEvent;
+import com.thowv.javafx.reversiboard.events.ReversiTurnSwitchedEvent;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
