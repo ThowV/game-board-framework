@@ -1,39 +1,38 @@
-.board {
-    -fx-skin        : "com.thowv.reversiboard.skins.ReversiBoardSkin";
+.game-board {
     -fx-border-width: 1px;
     -fx-border-color: #000000;
 }
 
-.tile {
+.game-board-tile {
     -fx-background-color: #4EA379;
     -fx-border-width    : 1px;
     -fx-border-color    : #000000;
 }
 
-.stonePieceHidden {
+.game-board-tile-inner-hidden {
     -fx-fill: rgba(0, 0, 0, 0);
 }
 
-.stonePieceVisible {
+.game-board-tile-inner-visible {
     -fx-fill: radial-gradient(center 50% 50%, radius 90%, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
-.stonePieceActive {
+.game-board-tile-inner-interactable {
     -fx-fill: radial-gradient(center 50% 50%, radius 90%, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
-.stonePieceActive:hover {
+.game-board-tile-inner-interactable:hover {
     -fx-fill: rgba(255, 255, 255, 0.3);
 }
 
-.stonePieceActive:pressed {
+.game-board-tile-inner-interactable:pressed {
     -fx-fill: rgba(255, 255, 255, 0.5);
 }
 
-.stonePieceBlack {
+.game-board-tile-inner-player-1 {
     -fx-fill: radial-gradient(center 50% 50%, radius 50%, #4A4A4A 0%, #242424 100%);
 }
 
-.stonePieceWhite {
+.game-board-tile-inner-player-2 {
     -fx-fill: radial-gradient(center 50% 50%, radius 50%, #F2F2F2 0%, #D1D1D1 100%);
 }

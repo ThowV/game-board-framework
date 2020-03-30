@@ -1,0 +1,34 @@
+.game-board {
+    -fx-border-width: 1px;
+    -fx-border-color: black;
+}
+
+.game-board-tile {
+    -fx-background-color: white;
+    -fx-border-width    : 1px;
+    -fx-border-color    : black;
+}
+
+.game-board-tile:hover {
+    -fx-background-color: black;
+}
+
+.game-board-tile-inner-hidden {
+    -fx-fill: rgba(0, 0, 0, 0);
+}
+
+.game-board-tile-inner-visible {
+    -fx-fill: radial-gradient(center 50% 50%, radius 90%, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.game-board-tile-inner-interactable {
+    -fx-fill: radial-gradient(center 50% 50%, radius 90%, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.game-board-tile-inner-player-1 {
+    -fx-fill: blue;
+}
+
+.game-board-tile-inner-player-2 {
+    -fx-fill: red;
+}
