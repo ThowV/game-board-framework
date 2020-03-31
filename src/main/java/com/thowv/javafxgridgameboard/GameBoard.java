@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 public class GameBoard extends Control {
     private GameBoardBehavior gameBoardBehavior;
-    private String stylesheet;
 
     public GameBoard(int size) {
         this.gameBoardBehavior = new GameBoardBehavior(this, size);
@@ -16,10 +15,7 @@ public class GameBoard extends Control {
     // region Overrides
     @Override
     public String getUserAgentStylesheet() {
-        if (stylesheet == null)
-            return GameBoard.class.getResource("/default-style.css").toExternalForm();
-
-        return stylesheet;
+        return GameBoard.class.getResource("/default-style.css").toExternalForm();
     }
 
     @Override
@@ -64,6 +60,10 @@ public class GameBoard extends Control {
 
     public ArrayList<GameBoardTile> getTilesByType(GameBoardTileType gameBoardTileType) {
         return gameBoardBehavior.getGameBoardTilesByType(gameBoardTileType);
+    }
+
+    public ArrayList<GameBoardTile> getTilesByTypes(GameBoardTileType[] gameBoardTileTypes) {
+        return gameBoardBehavior.getGameBoardTilesByTypes(gameBoardTileTypes);
     }
     // endregion
 }

@@ -13,22 +13,24 @@
     -fx-background-color: black;
 }
 
+.game-board-tile-inner { }
+
 .game-board-tile-inner-hidden {
-    -fx-fill: rgba(0, 0, 0, 0);
+    -fx-background-color: transparent;
 }
 
 .game-board-tile-inner-visible {
-    -fx-fill: radial-gradient(center 50% 50%, radius 90%, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+    -fx-background-color: lightgrey;
 }
 
 .game-board-tile-inner-interactable {
-    -fx-fill: radial-gradient(center 50% 50%, radius 90%, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
+    -fx-background-color: grey
 }
 
 .game-board-tile-inner-player-1 {
-    -fx-fill: blue;
+    -fx-background-color: blue;
 }
 
 .game-board-tile-inner-player-2 {
-    -fx-fill: red;
+    -fx-background-color: red;
 }

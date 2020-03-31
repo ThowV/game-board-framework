@@ -1,1 +1,1 @@
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.thowv.javafxcomps/reversi-board/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.thowv.javafxcomps/reversi-board)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.thowv.javafxcomps/grid-game-board-framework/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.thowv.javafxcomps/grid-game-board-framework)

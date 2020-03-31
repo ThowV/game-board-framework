@@ -1,5 +1,6 @@
 package com.thowv.javafxgridgameboard.premades.reversi;
 
+import com.thowv.javafxgridgameboard.AlgorithmHelper;
 import com.thowv.javafxgridgameboard.GameBoard;
 import com.thowv.javafxgridgameboard.GameBoardTile;
 import com.thowv.javafxgridgameboard.GameBoardTileType;
@@ -7,51 +8,6 @@ import com.thowv.javafxgridgameboard.GameBoardTileType;
 import java.util.ArrayList;
 
 public class ReversiAlgorithms {
-    private enum Direction { W, NW, N, NE, E, SE, S, SW }
-
-    private static int[] translateDirToCords(Direction direction, int xCord, int yCord) {
-        switch (direction) {
-            case W:
-                xCord -= 1;
-                break;
-            case NW:
-                xCord -= 1;
-                yCord -= 1;
-                break;
-            case N:
-                yCord -= 1;
-                break;
-            case NE:
-                xCord += 1;
-                yCord -= 1;
-                break;
-            case E:
-                xCord += 1;
-                break;
-            case SE:
-                xCord += 1;
-                yCord += 1;
-                break;
-            case S:
-                yCord += 1;
-                break;
-            case SW:
-                xCord -= 1;
-                yCord += 1;
-        }
-
-        return new int[]{xCord, yCord};
-    }
-
-    private static GameBoardTileType flipTilePieceType(GameBoardTileType gameBoardTileType) {
-        if (gameBoardTileType == GameBoardTileType.PLAYER_1)
-            return GameBoardTileType.PLAYER_2;
-        else if (gameBoardTileType == GameBoardTileType.PLAYER_2)
-            return GameBoardTileType.PLAYER_1;
-
-        return null;
-    }
-
     // region Determine game board tile possibilities
     public static ArrayList<GameBoardTile> determineTilePossibilities(GameBoard gameBoard,
                                                                       GameBoardTileType currentTileType) {
@@ -63,7 +19,7 @@ public class ReversiAlgorithms {
         // Determine all game board tiles that match the current game board tile type
         for (GameBoardTile gameBoardTile : matchedTiles) {
             // Do this algorithm for each direction
-            for (Direction direction : Direction.values()) {
+            for (AlgorithmHelper.GameBoardDirection direction : AlgorithmHelper.GameBoardDirection.values()) {
                 // Run algorithm
                 GameBoardTile possibility = determineTilePossibilities(gameBoard, currentTileType,
                         direction, gameBoardTile.getXCord(), gameBoardTile.getYCord(),
@@ -78,10 +34,11 @@ public class ReversiAlgorithms {
     }
 
     private static GameBoardTile determineTilePossibilities(GameBoard gameBoard, GameBoardTileType currentTileType,
-                                                   Direction direction, int startXCord, int startYCord,
-                                                   boolean canBeActivated) {
+                                                            AlgorithmHelper.GameBoardDirection direction,
+                                                            int startXCord, int startYCord, boolean canBeActivated) {
         // Determine the coordinates of the current tile we are accessing
-        int[] newCoordinates = translateDirToCords(direction, startXCord, startYCord);
+        int[] newCoordinates = AlgorithmHelper.translateDirToCords(
+                direction, startXCord, startYCord);
         int newXCord = newCoordinates[0];
         int newYCord = newCoordinates[1];
 
@@ -96,7 +53,7 @@ public class ReversiAlgorithms {
         if (currentTile.getGameBoardTileType() == GameBoardTileType.HIDDEN && canBeActivated) {
             return currentTile;
         }
-        else if (currentTile.getGameBoardTileType() != flipTilePieceType(currentTileType))
+        else if (currentTile.getGameBoardTileType() != AlgorithmHelper.flipTileType(currentTileType))
             return null; // The tile is anything other than the opposite of the current tile type, so we stop
 
         return determineTilePossibilities(gameBoard, currentTileType, direction,
@@ -107,15 +64,17 @@ public class ReversiAlgorithms {
     // region Flip game board tiles from origin
     public static void flipTilesFromOrigin(GameBoard gameBoard, GameBoardTileType currentTileType,
                                            int xCord, int yCord) {
-        for (Direction direction : Direction.values()) {
+        for (AlgorithmHelper.GameBoardDirection direction : AlgorithmHelper.GameBoardDirection.values()) {
             flipTilesFromOrigin(gameBoard, currentTileType, direction, xCord, yCord);
         }
     }
 
     private static boolean flipTilesFromOrigin(GameBoard gameBoard, GameBoardTileType currentTileType,
-                                               Direction direction, int startXCord, int startYCord) {
+                                               AlgorithmHelper.GameBoardDirection direction,
+                                               int startXCord, int startYCord) {
         // Determine the coordinates of the current tile we are accessing
-        int[] newCoordinates = translateDirToCords(direction, startXCord, startYCord);
+        int[] newCoordinates = AlgorithmHelper.translateDirToCords(
+                direction, startXCord, startYCord);
         int newXCord = newCoordinates[0];
         int newYCord = newCoordinates[1];
 
@@ -135,7 +94,7 @@ public class ReversiAlgorithms {
          */
         if (currentTile.getGameBoardTileType() == currentTileType)
             return true;
-        else if (currentTile.getGameBoardTileType() != flipTilePieceType(currentTileType))
+        else if (currentTile.getGameBoardTileType() != AlgorithmHelper.flipTileType(currentTileType))
             return false;
 
         boolean canBeFlipped = flipTilesFromOrigin(gameBoard, currentTileType,

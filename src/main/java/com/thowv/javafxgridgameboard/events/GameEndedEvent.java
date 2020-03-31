@@ -8,14 +8,14 @@ import javafx.event.EventType;
 public class GameEndedEvent extends Event {
     public static final EventType<GameEndedEvent> GAME_ENDED_EVENT_TYPE =
             new EventType<>(Event.ANY, "GAME_ENDED_EVENT_TYPE");
-    private GameBoardTileType winningTileType;
+    private GameBoardTileType[] winningTileTypes;
 
-    public GameEndedEvent(Object source, EventTarget target, GameBoardTileType winningTileType) {
+    public GameEndedEvent(Object source, EventTarget target, GameBoardTileType[] winningTileTypes) {
         super(source, target, GAME_ENDED_EVENT_TYPE);
-        this.winningTileType = winningTileType;
+        this.winningTileTypes = winningTileTypes;
     }
 
-    public GameBoardTileType getWinningTileType() {
-        return winningTileType;
+    public GameBoardTileType[] getWinningTileType() {
+        return winningTileTypes;
     }
 }

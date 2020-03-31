@@ -1,15 +1,11 @@
 package com.thowv.javafxgridgameboard.premades.reversi;
 
 import com.thowv.javafxgridgameboard.*;
-import com.thowv.javafxgridgameboard.events.GameBoardTilePressedEvent;
+import com.thowv.javafxgridgameboard.premades.AbstractTurnEntityPlayer;
 
 import java.util.ArrayList;
 
-public class ReversiTurnEntityPlayer extends AbstractTurnEntity {
-    public ReversiTurnEntityPlayer() {
-        super(EntityType.PLAYER);
-    }
-
+public class ReversiTurnEntityPlayer extends AbstractTurnEntityPlayer {
     @Override
     public void takeTurn(AbstractGameInstance gameInstance) {
         takeTurn((ReversiGameInstance)gameInstance);
@@ -20,14 +16,5 @@ public class ReversiTurnEntityPlayer extends AbstractTurnEntity {
                 gameInstance.getGameBoard(), getGameBoardTileType());
 
         gameInstance.getGameBoard().setTileTypes(possibleGameBoardTiles, GameBoardTileType.INTERACTABLE);
-    }
-
-    @Override
-    public void onTilePressed(AbstractGameInstance gameInstance, GameBoardTilePressedEvent e) {
-        onTilePressed((ReversiGameInstance)gameInstance, e.getXCord(), e.getYCord());
-    }
-
-    private void onTilePressed(ReversiGameInstance gameInstance, int xCord, int yCord) {
-        gameInstance.doTurn(xCord, yCord);
     }
 }

@@ -6,7 +6,6 @@ public class GameBoardBehavior {
     private GameBoard gameBoardControl;
     private int gameBoardSize;
     private GameBoardTile[][] gameBoardTiles;
-    private ArrayList<GameBoardTile> possibleGameBoardTiles = new ArrayList<>();
 
     public GameBoardBehavior(GameBoard gameBoardControl, int gameBoardSize) {
         this.gameBoardControl = gameBoardControl;

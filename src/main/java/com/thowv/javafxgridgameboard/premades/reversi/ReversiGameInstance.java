@@ -2,10 +2,9 @@ package com.thowv.javafxgridgameboard.premades.reversi;
 
 import com.thowv.javafxgridgameboard.*;
 import com.thowv.javafxgridgameboard.events.GameBoardTilePressedEvent;
-import com.thowv.javafxgridgameboard.events.GameEndedEvent;
 
 public class ReversiGameInstance extends AbstractGameInstance {
-    byte passAmount = 0;
+    private byte passAmount = 0;
 
     // region Constructors
     public ReversiGameInstance(GameBoard gameBoard, AbstractTurnEntity entityOne, AbstractTurnEntity entityTwo) {
@@ -17,13 +16,9 @@ public class ReversiGameInstance extends AbstractGameInstance {
         super(gameBoard, entityOne, entityTwo,
                 ReversiGameInstance.class.getResource("/reversi-style.css").toExternalForm(),
                 currentTurnEntity);
-
-        super.getGameBoard().addEventHandler(GameBoardTilePressedEvent.TILE_PRESSED_EVENT_EVENT_TYPE,
-                this::onTilePressed);
     }
     // endregion
 
-    @Override
     public void startGame() {
         int halfSize = (int)Math.floor((double)super.getGameBoard().getSize() / 2);
 
@@ -33,42 +28,21 @@ public class ReversiGameInstance extends AbstractGameInstance {
         super.getGameBoard().setTileType(halfSize, halfSize, GameBoardTileType.PLAYER_1);
         super.getGameBoard().setTileType(halfSize - 1, halfSize, GameBoardTileType.PLAYER_2);
 
-        // Initiate the first turn
-        super.getCurrentTurnEntity().takeTurn(this);
+        super.startGame(this);
     }
 
     @Override
     public void doTurn(int x, int y) {
-        // Place the appropriate game board tile type at the given coordinates
-        super.getGameBoard().setTileType(x, y,
-                super.getCurrentTurnEntity().getGameBoardTileType());
+        super.doTurn(x, y);
 
         // Flip all possible game board tile types
         ReversiAlgorithms.flipTilesFromOrigin(super.getGameBoard(),
                 super.getCurrentTurnEntity().getGameBoardTileType(), x, y);
 
-        // Clear decorated VISIBLE and INTERACTABLE game board tile types
-        super.getGameBoard().clearDecoratedTiles();
-
-        nextTurn();
-    }
-
-    @Override
-    public void endGame() {
-        int entityOneTileAmount = super.getGameBoard().getTilesByType(GameBoardTileType.PLAYER_1).size();
-        int entityTwoTileAmount = super.getGameBoard().getTilesByType(GameBoardTileType.PLAYER_2).size();
-
-        GameBoardTileType winningTileType = null; // Null stands for tie
-
-        // Determine the winner
-        if (entityOneTileAmount > entityTwoTileAmount)
-            winningTileType = super.getEntityOne().getGameBoardTileType();
-        else if (entityTwoTileAmount > entityOneTileAmount)
-            winningTileType = super.getEntityTwo().getGameBoardTileType();
-
-        super.getGameBoard().fireEvent(
-                new GameEndedEvent(this, super.getGameBoard(), winningTileType)
-        );
+        if (super.getGameBoard().getTilesByType(GameBoardTileType.HIDDEN).size() != 0)
+            super.switchTurn(this);
+        else
+            endGame();
     }
 
     public void passTurn() {
@@ -77,16 +51,29 @@ public class ReversiGameInstance extends AbstractGameInstance {
         if (passAmount == 2)
             endGame();
         else
-            nextTurn();
+            switchTurn();
     }
 
-    private void nextTurn() {
-        // Switch to the next entity and tell it to take a turn
-        super.switchCurrentTurnEntity();
-        super.getCurrentTurnEntity().takeTurn(this);
+    public void endGame() {
+        int entityOneTileAmount = super.getGameBoard().getTilesByType(GameBoardTileType.PLAYER_1).size();
+        int entityTwoTileAmount = super.getGameBoard().getTilesByType(GameBoardTileType.PLAYER_2).size();
+
+        // Standard is a tie, unless calculated otherwise
+        GameBoardTileType[] winningTileType = new GameBoardTileType[] {
+                GameBoardTileType.PLAYER_1, GameBoardTileType.PLAYER_2
+        };
+
+        // Determine the winner
+        if (entityOneTileAmount > entityTwoTileAmount)
+            winningTileType = new GameBoardTileType[] { super.getEntityOne().getGameBoardTileType() };
+        else if (entityTwoTileAmount > entityOneTileAmount)
+            winningTileType = new GameBoardTileType[] { super.getEntityTwo().getGameBoardTileType() };
+
+        super.endGame(winningTileType);
     }
 
-    private void onTilePressed(GameBoardTilePressedEvent e) {
+    @Override
+    protected void onTilePressed(GameBoardTilePressedEvent e) {
         if (super.getCurrentTurnEntity().getEntityType() == AbstractTurnEntity.EntityType.PLAYER)
             super.getCurrentTurnEntity().onTilePressed(this, e);
     }

@@ -1,38 +1,32 @@
 package com.thowv.javafxgridgameboard;
 
-import javafx.beans.binding.Bindings;
 import javafx.scene.control.SkinBase;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
+import javafx.scene.layout.StackPane;
 
 public class GameBoardTileSkin extends SkinBase<GameBoardTile> {
-    private Circle gameBoardTileInner;
+    private Pane gameBoardTileInner;
 
     protected GameBoardTileSkin(GameBoardTile gameBoardTileControl) {
         super(gameBoardTileControl);
 
-        Pane pane = new Pane();
-        pane.getStyleClass().add("game-board-tile");
+        StackPane stackPane = new StackPane();
+        stackPane.getStyleClass().add("game-board-tile");
 
-        float circleSize = 10 * 0.3f;
-
-        gameBoardTileInner = new Circle();
-
-        gameBoardTileInner.radiusProperty().bind(Bindings.divide(pane.widthProperty(), circleSize));
-        gameBoardTileInner.centerXProperty().bind(pane.widthProperty().divide(circleSize / 1.5f));
-        gameBoardTileInner.centerYProperty().bind(pane.widthProperty().divide(circleSize / 1.5f));
-
+        gameBoardTileInner = new Pane();
+        gameBoardTileInner.getStyleClass().add("game-board-tile-inner");
         gameBoardTileInner.setOnMouseClicked(e -> gameBoardTileControl.getGameBoardTileBehavior().onBoardTileClick());
         setGameBoardTileType(gameBoardTileControl.getGameBoardTileBehavior().getGameBoardTileType());
 
-        pane.getChildren().add(gameBoardTileInner);
+        stackPane.getChildren().add(gameBoardTileInner);
 
         // Gets forwarded to the BoardTile.java class. We add the created tile
-        getChildren().add(pane);
+        getChildren().add(stackPane);
     }
 
     public void setGameBoardTileType(GameBoardTileType gameBoardTileType) {
-        gameBoardTileInner.getStyleClass().clear();
+        if (gameBoardTileInner.getStyleClass().size() == 2)
+            gameBoardTileInner.getStyleClass().remove(1);
 
         if (gameBoardTileType == GameBoardTileType.HIDDEN)
             gameBoardTileInner.getStyleClass().add("game-board-tile-inner-hidden");
