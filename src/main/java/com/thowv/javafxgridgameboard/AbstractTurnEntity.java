@@ -11,10 +11,11 @@ public abstract class AbstractTurnEntity {
         this.entityType = entityType;
     }
 
-    public abstract void takeTurn(AbstractGameInstance gameIstance);
+    public abstract void takeTurn(AbstractGameInstance gameInstance);
 
     public void onTilePressed(AbstractGameInstance gameInstance, GameBoardTilePressedEvent e) { }
 
+    // region Getters and Setters
     public EntityType getEntityType() {
         return entityType;
     }
@@ -26,4 +27,5 @@ public abstract class AbstractTurnEntity {
     public void setGameBoardTileType(GameBoardTileType gameBoardTileType) {
         this.gameBoardTileType = gameBoardTileType;
     }
+    // endregion
 }

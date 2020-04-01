@@ -31,7 +31,7 @@ Maven should now automatically add the dependency to your external libraries.
 
 ## Built With 
 
-* [JavaFX](https://openjfx.io/) - The client framework used
+* [JavaFX](https://openjfx.io/) - The client framework
 * [Maven](https://maven.apache.org/) - Dependency Management
 
 ## Authors

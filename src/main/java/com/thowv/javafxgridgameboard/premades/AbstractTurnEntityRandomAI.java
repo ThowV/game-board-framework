@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class AbstractTurnEntityRandomAI extends AbstractTurnEntity {
-    int turnSpeed;
+    private int turnSpeed;
 
     public AbstractTurnEntityRandomAI() {
         this(2000);
@@ -36,5 +36,9 @@ public abstract class AbstractTurnEntityRandomAI extends AbstractTurnEntity {
             gameInstance.doTurn(gameBoardTile.getXCord(), gameBoardTile.getYCord());
         });
         pauseTransition.play();
+    }
+
+    public int getTurnSpeed() {
+        return turnSpeed;
     }
 }
