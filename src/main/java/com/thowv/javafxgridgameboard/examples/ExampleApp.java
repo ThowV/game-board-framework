@@ -42,7 +42,7 @@ public class ExampleApp extends Application {
                 new ReversiTurnEntityPlayer(), new ReversiTurnEntityAI());
 
         // Start the game!
-        reversiGameInstance.startGame();
+        reversiGameInstance.start();
     }
 
     private void tictactoeExample(Stage primaryStage) {
@@ -65,7 +65,7 @@ public class ExampleApp extends Application {
                 new TTToeTurnEntityPlayer(), new TTToeTurnEntityAI());
 
         // Start the game!
-        tttoeGameInstance.startGame();
+        tttoeGameInstance.start();
     }
 
     public static void main(String[] args) {

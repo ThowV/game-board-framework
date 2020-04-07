@@ -69,7 +69,7 @@ public class ReversiGameInstance extends AbstractGameInstance {
         else if (entityTwoTileAmount > entityOneTileAmount)
             winningTileType = new GameBoardTileType[] { super.getEntityTwo().getGameBoardTileType() };
 
-        super.endGame(winningTileType);
+        super.end(winningTileType);
     }
 
     @Override

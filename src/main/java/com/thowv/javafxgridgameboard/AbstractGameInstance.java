@@ -2,6 +2,7 @@ package com.thowv.javafxgridgameboard;
 
 import com.thowv.javafxgridgameboard.events.GameBoardTilePressedEvent;
 import com.thowv.javafxgridgameboard.events.GameEndedEvent;
+import javafx.application.Platform;
 
 public abstract class AbstractGameInstance {
     private GameBoard gameBoard;
@@ -29,9 +30,13 @@ public abstract class AbstractGameInstance {
         currentTurnEntity ^= 1;
     }
 
-    public abstract void startGame();
+    public void start() {
+        Platform.runLater(this::startGame);
+    }
 
-    public void startGame(AbstractGameInstance gameInstance) {
+    protected abstract void startGame();
+
+    protected void startGame(AbstractGameInstance gameInstance) {
         // Initiate the first turn
         getCurrentTurnEntity().takeTurn(gameInstance);
     }
@@ -54,11 +59,11 @@ public abstract class AbstractGameInstance {
         getCurrentTurnEntity().takeTurn(gameInstance);
     }
 
-    public void endGame(GameBoardTileType winningTileType) {
-        endGame(new GameBoardTileType[] { winningTileType });
+    public void end(GameBoardTileType winningTileType) {
+        end(new GameBoardTileType[] { winningTileType });
     }
 
-    public void endGame(GameBoardTileType[] winningTileTypes) {
+    public void end(GameBoardTileType[] winningTileTypes) {
         // Fire the game ended event
         gameBoard.fireEvent(
                 new GameEndedEvent(this, gameBoard, winningTileTypes)

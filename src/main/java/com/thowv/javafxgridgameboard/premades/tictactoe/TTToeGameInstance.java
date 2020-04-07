@@ -32,9 +32,9 @@ public class TTToeGameInstance extends AbstractGameInstance {
         GameBoardTileType winningTileType = TTToeAlgorithms.checkThreeInRow(super.getGameBoard());
 
         if (winningTileType != null)
-            super.endGame(winningTileType);
+            super.end(winningTileType);
         else if (super.getGameBoard().getTilesByType(GameBoardTileType.HIDDEN).size() == 0)
-            super.endGame(new GameBoardTileType[]{ GameBoardTileType.PLAYER_1, GameBoardTileType.PLAYER_2 });
+            super.end(new GameBoardTileType[]{ GameBoardTileType.PLAYER_1, GameBoardTileType.PLAYER_2 });
         else
             super.switchTurn(this);
     }
