@@ -26,6 +26,19 @@ public class GameBoardBehavior {
             gameBoardTile.setGameBoardTileType(GameBoardTileType.HIDDEN);
         }
     }
+
+    public int countTilesByType(GameBoardTileType gameBoardTileType) {
+        int tileCount = 0;
+
+        for (GameBoardTile[] gameBoardTilesX : gameBoardTiles) {
+            for (GameBoardTile gameBoardTile : gameBoardTilesX) {
+                if (gameBoardTile.getGameBoardTileType() == gameBoardTileType)
+                    tileCount++;
+            }
+        }
+
+        return tileCount;
+    }
     // endregion
 
     // region Getters and setters

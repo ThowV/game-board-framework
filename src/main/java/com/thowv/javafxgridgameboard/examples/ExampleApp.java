@@ -3,9 +3,7 @@ package com.thowv.javafxgridgameboard.examples;
 import com.thowv.javafxgridgameboard.AbstractGameInstance;
 import com.thowv.javafxgridgameboard.AbstractTurnEntity;
 import com.thowv.javafxgridgameboard.GameBoard;
-import com.thowv.javafxgridgameboard.events.GameBoardTilePressedEvent;
 import com.thowv.javafxgridgameboard.listeners.GameEndListener;
-import com.thowv.javafxgridgameboard.listeners.GameStartListener;
 import com.thowv.javafxgridgameboard.premades.reversi.ReversiGameInstance;
 import com.thowv.javafxgridgameboard.premades.reversi.ReversiTurnEntityAI;
 import com.thowv.javafxgridgameboard.premades.reversi.ReversiTurnEntityPlayer;
@@ -15,8 +13,6 @@ import com.thowv.javafxgridgameboard.premades.tictactoe.TTToeTurnEntityPlayer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.util.Arrays;
 
 public class ExampleApp extends Application {
     @Override
@@ -31,8 +27,8 @@ public class ExampleApp extends Application {
         gameInstance.onGameEnd(new GameEndListener() {
             @Override
             public void onGameEnd(AbstractTurnEntity winningTurnEntity, AbstractTurnEntity losingTurnEntity) {
-                System.out.println("Game ended with a winner " + winningTurnEntity
-                        + "\nAnd a loser... " + losingTurnEntity);
+                System.out.println("Game ended with a winner " + winningTurnEntity.getName()
+                        + "\nAnd a loser... " + losingTurnEntity.getName());
             }
 
             @Override
@@ -40,7 +36,10 @@ public class ExampleApp extends Application {
                 System.out.println("Game ended with a tie!");
             }
         });
-        gameInstance.onTurnSwitch((e1, e2) -> System.out.println("Turn switched from " + e1 + " to " + e2));
+        gameInstance.onTurnSwitch((turnEntityOne, turnEntityTwo) -> System.out.println("Turn switched!"
+                + "\n\tFrom: " + turnEntityOne.getName() + " - Points: " + turnEntityOne.getPoints()
+                + "\n\tTo: " + turnEntityTwo.getName() + " - Points: " + turnEntityTwo.getPoints())
+        );
 
         // Start the game!
         gameInstance.start();
@@ -57,7 +56,9 @@ public class ExampleApp extends Application {
 
         // Create an instance with the required parameters
         return new ReversiGameInstance(gameBoard,
-                new ReversiTurnEntityPlayer(), new ReversiTurnEntityAI());
+                new ReversiTurnEntityPlayer("ReversiPlayer"),
+                new ReversiTurnEntityAI("ReversiAI")
+        );
     }
 
     private AbstractGameInstance tictactoeExample(Stage primaryStage) {
@@ -71,7 +72,9 @@ public class ExampleApp extends Application {
 
         // Create an instance with the required parameters
         return new TTToeGameInstance(gameBoard,
-                new TTToeTurnEntityPlayer(), new TTToeTurnEntityAI());
+                new TTToeTurnEntityPlayer("TTToePlayer"),
+                new TTToeTurnEntityAI("TTToeAI")
+        );
     }
 
     public static void main(String[] args) {

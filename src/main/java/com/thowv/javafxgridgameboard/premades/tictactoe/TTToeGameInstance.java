@@ -26,8 +26,10 @@ public class TTToeGameInstance extends AbstractGameInstance {
     public void doTurn(int x, int y) {
         super.doTurn(x, y);
 
+        // Check if there is a three in a row on the board
         GameBoardTileType winningTileType = TTToeAlgorithms.checkThreeInRow(super.getGameBoard());
 
+        // Either end the game or switch the turn
         if (winningTileType != null) {
             AbstractTurnEntity winningEntity = super.getEntityByTileType(winningTileType);
             AbstractTurnEntity losingEntity = super.getEntityByTileType(AlgorithmHelper.flipTileType(

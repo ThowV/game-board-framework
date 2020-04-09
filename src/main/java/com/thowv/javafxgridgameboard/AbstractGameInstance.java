@@ -72,6 +72,12 @@ public abstract class AbstractGameInstance {
         getCurrentTurnEntity().takeTurn(gameInstance);
     }
 
+    public void calculateEntityPoints() {
+        // Count points for each entity by counting the tiles they possess
+        for (AbstractTurnEntity turnEntity : turnEntities)
+            turnEntity.setPoints(gameBoard.countTilesByType(turnEntity.getGameBoardTileType()));
+    }
+
     public void end(AbstractTurnEntity winningTurnEntity, AbstractTurnEntity losingTurnEntity) {
         eventManager.notifyOnGameEnd(winningTurnEntity, losingTurnEntity);
     }
@@ -103,6 +109,10 @@ public abstract class AbstractGameInstance {
 
     public GameBoard getGameBoard() {
         return gameBoard;
+    }
+
+    public AbstractTurnEntity[] getTurnEntities() {
+        return turnEntities;
     }
 
     public AbstractTurnEntity getEntityOne() {

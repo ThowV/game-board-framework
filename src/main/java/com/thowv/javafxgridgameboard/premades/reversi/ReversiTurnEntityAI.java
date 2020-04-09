@@ -6,6 +6,9 @@ import com.thowv.javafxgridgameboard.premades.AbstractTurnEntityRandomAI;
 import java.util.ArrayList;
 
 public class ReversiTurnEntityAI extends AbstractTurnEntityRandomAI {
+    public ReversiTurnEntityAI(String name) {
+        super(name);
+    }
 
     @Override
     public void takeTurn(AbstractGameInstance gameInstance) {

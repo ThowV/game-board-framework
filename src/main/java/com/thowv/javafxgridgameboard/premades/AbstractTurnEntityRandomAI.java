@@ -12,12 +12,12 @@ import java.util.Random;
 public abstract class AbstractTurnEntityRandomAI extends AbstractTurnEntity {
     private int turnSpeed;
 
-    public AbstractTurnEntityRandomAI() {
-        this(2000);
+    public AbstractTurnEntityRandomAI(String name) {
+        this(name, 2000);
     }
 
-    public AbstractTurnEntityRandomAI(int turnSpeed) {
-        super(EntityType.AI);
+    public AbstractTurnEntityRandomAI(String name, int turnSpeed) {
+        super(EntityType.AI, name);
         this.turnSpeed = turnSpeed;
     }
 

@@ -32,6 +32,10 @@ public class GameBoard extends Control {
     public void clearDecoratedTiles() {
         gameBoardBehavior.clearDecoratedGameBoardTiles();
     }
+
+    public int countTilesByType(GameBoardTileType gameBoardTileType) {
+        return gameBoardBehavior.countTilesByType(gameBoardTileType);
+    }
     // endregion
 
     public GameBoardSkin getGameBoardSkin() {

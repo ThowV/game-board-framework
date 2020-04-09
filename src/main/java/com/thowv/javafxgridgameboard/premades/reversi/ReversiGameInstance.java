@@ -39,6 +39,8 @@ public class ReversiGameInstance extends AbstractGameInstance {
         ReversiAlgorithms.flipTilesFromOrigin(super.getGameBoard(),
                 super.getCurrentTurnEntity().getGameBoardTileType(), x, y);
 
+        super.calculateEntityPoints();
+
         if (super.getGameBoard().getTilesByType(GameBoardTileType.HIDDEN).size() != 0)
             super.switchTurn(this);
         else

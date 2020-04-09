@@ -6,6 +6,10 @@ import com.thowv.javafxgridgameboard.premades.AbstractTurnEntityPlayer;
 import java.util.ArrayList;
 
 public class ReversiTurnEntityPlayer extends AbstractTurnEntityPlayer {
+    public ReversiTurnEntityPlayer(String name) {
+        super(name);
+    }
+
     @Override
     public void takeTurn(AbstractGameInstance gameInstance) {
         takeTurn((ReversiGameInstance)gameInstance);

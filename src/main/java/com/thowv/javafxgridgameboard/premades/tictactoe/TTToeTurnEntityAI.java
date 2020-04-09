@@ -8,6 +8,10 @@ import com.thowv.javafxgridgameboard.premades.AbstractTurnEntityRandomAI;
 import java.util.ArrayList;
 
 public class TTToeTurnEntityAI extends AbstractTurnEntityRandomAI {
+    public TTToeTurnEntityAI(String name) {
+        super(name);
+    }
+
     @Override
     public void takeTurn(AbstractGameInstance gameInstance) {
         ArrayList<GameBoardTile> possibleGameBoardTiles = gameInstance.getGameBoard().getTilesByType(

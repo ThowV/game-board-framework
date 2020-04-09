@@ -5,8 +5,8 @@ import com.thowv.javafxgridgameboard.AbstractTurnEntity;
 import com.thowv.javafxgridgameboard.events.GameBoardTilePressedEvent;
 
 public abstract class AbstractTurnEntityPlayer extends AbstractTurnEntity {
-    public AbstractTurnEntityPlayer() {
-        super(EntityType.PLAYER);
+    public AbstractTurnEntityPlayer(String name) {
+        super(EntityType.PLAYER, name);
     }
 
     @Override
