@@ -59,17 +59,25 @@ public class ReversiGameInstance extends AbstractGameInstance {
         int entityTwoTileAmount = super.getGameBoard().getTilesByType(GameBoardTileType.PLAYER_2).size();
 
         // Standard is a tie, unless calculated otherwise
-        GameBoardTileType[] winningTileType = new GameBoardTileType[] {
+        GameBoardTileType[] winningTileTypes = new GameBoardTileType[] {
                 GameBoardTileType.PLAYER_1, GameBoardTileType.PLAYER_2
         };
 
         // Determine the winner
         if (entityOneTileAmount > entityTwoTileAmount)
-            winningTileType = new GameBoardTileType[] { super.getEntityOne().getGameBoardTileType() };
+            winningTileTypes = new GameBoardTileType[] { super.getEntityOne().getGameBoardTileType() };
         else if (entityTwoTileAmount > entityOneTileAmount)
-            winningTileType = new GameBoardTileType[] { super.getEntityTwo().getGameBoardTileType() };
+            winningTileTypes = new GameBoardTileType[] { super.getEntityTwo().getGameBoardTileType() };
 
-        super.end(winningTileType);
+        if (winningTileTypes.length > 1)
+            super.end(new AbstractTurnEntity[]{ getEntityOne(), getEntityTwo() });
+        else {
+            AbstractTurnEntity winningEntity = super.getEntityByTileType(winningTileTypes[0]);
+            AbstractTurnEntity losingEntity = super.getEntityByTileType(AlgorithmHelper.flipTileType(
+                    winningTileTypes[0]));
+
+            super.end(winningEntity, losingEntity);
+        }
     }
 
     @Override

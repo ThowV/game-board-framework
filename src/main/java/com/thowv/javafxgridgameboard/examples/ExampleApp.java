@@ -1,8 +1,11 @@
 package com.thowv.javafxgridgameboard.examples;
 
+import com.thowv.javafxgridgameboard.AbstractGameInstance;
+import com.thowv.javafxgridgameboard.AbstractTurnEntity;
 import com.thowv.javafxgridgameboard.GameBoard;
 import com.thowv.javafxgridgameboard.events.GameBoardTilePressedEvent;
-import com.thowv.javafxgridgameboard.events.GameEndedEvent;
+import com.thowv.javafxgridgameboard.listeners.GameEndListener;
+import com.thowv.javafxgridgameboard.listeners.GameStartListener;
 import com.thowv.javafxgridgameboard.premades.reversi.ReversiGameInstance;
 import com.thowv.javafxgridgameboard.premades.reversi.ReversiTurnEntityAI;
 import com.thowv.javafxgridgameboard.premades.reversi.ReversiTurnEntityPlayer;
@@ -18,19 +21,34 @@ import java.util.Arrays;
 public class ExampleApp extends Application {
     @Override
     public void start(Stage primaryStage) {
-        reversiExample(primaryStage);
-        //tictactoeExample(primaryStage);
+        AbstractGameInstance gameInstance;
+
+        gameInstance = reversiExample(primaryStage);
+        //gameInstance = tictactoeExample(primaryStage);
+
+        // Subscribe to events
+        gameInstance.onGameStart(() -> System.out.println("Game started!"));
+        gameInstance.onGameEnd(new GameEndListener() {
+            @Override
+            public void onGameEnd(AbstractTurnEntity winningTurnEntity, AbstractTurnEntity losingTurnEntity) {
+                System.out.println("Game ended with a winner " + winningTurnEntity
+                        + "\nAnd a loser... " + losingTurnEntity);
+            }
+
+            @Override
+            public void onGameEnd(AbstractTurnEntity[] tieTurnEntities) {
+                System.out.println("Game ended with a tie!");
+            }
+        });
+        gameInstance.onTurnSwitch((e1, e2) -> System.out.println("Turn switched from " + e1 + " to " + e2));
+
+        // Start the game!
+        gameInstance.start();
     }
 
-    private void reversiExample(Stage primaryStage) {
+    private AbstractGameInstance reversiExample(Stage primaryStage) {
         // Create a game board with a given size
         GameBoard gameBoard = new GameBoard(8);
-
-        gameBoard.addEventHandler(GameBoardTilePressedEvent.TILE_PRESSED_EVENT_EVENT_TYPE,
-                e -> System.out.println("Tile x: " + e.getXCord() + "\tTile y: " + e.getYCord()));
-
-        gameBoard.addEventHandler(GameEndedEvent.GAME_ENDED_EVENT_TYPE,
-                e -> System.out.println("Game ended: " + Arrays.toString(e.getWinningTileType())));
 
         // Create your stage
         primaryStage.setScene(new Scene(gameBoard));
@@ -38,22 +56,13 @@ public class ExampleApp extends Application {
         primaryStage.show();
 
         // Create an instance with the required parameters
-        ReversiGameInstance reversiGameInstance = new ReversiGameInstance(gameBoard,
+        return new ReversiGameInstance(gameBoard,
                 new ReversiTurnEntityPlayer(), new ReversiTurnEntityAI());
-
-        // Start the game!
-        reversiGameInstance.start();
     }
 
-    private void tictactoeExample(Stage primaryStage) {
+    private AbstractGameInstance tictactoeExample(Stage primaryStage) {
         // Create a game board with a given size
         GameBoard gameBoard = new GameBoard(3);
-
-        gameBoard.addEventHandler(GameBoardTilePressedEvent.TILE_PRESSED_EVENT_EVENT_TYPE,
-                e -> System.out.println("Tile x: " + e.getXCord() + "\tTile y: " + e.getYCord()));
-
-        gameBoard.addEventHandler(GameEndedEvent.GAME_ENDED_EVENT_TYPE,
-                e -> System.out.println("Game ended: " + Arrays.toString(e.getWinningTileType())));
 
         // Create your stage
         primaryStage.setScene(new Scene(gameBoard));
@@ -61,11 +70,8 @@ public class ExampleApp extends Application {
         primaryStage.show();
 
         // Create an instance with the required parameters
-        TTToeGameInstance tttoeGameInstance = new TTToeGameInstance(gameBoard,
+        return new TTToeGameInstance(gameBoard,
                 new TTToeTurnEntityPlayer(), new TTToeTurnEntityAI());
-
-        // Start the game!
-        tttoeGameInstance.start();
     }
 
     public static void main(String[] args) {
