@@ -14,6 +14,13 @@ public class TTToeGameInstance extends AbstractGameInstance {
         super(gameBoard, entityOne, entityTwo,
                 TTToeGameInstance.class.getResource("/tictactoe-style.css").toExternalForm(),
                 currentTurnEntity);
+
+        for(AbstractTurnEntity turnEntity : super.getTurnEntities()) {
+            if (turnEntity.getGameBoardTileType() == GameBoardTileType.PLAYER_1)
+                turnEntity.setColor("circle");
+            else
+                turnEntity.setColor("cross");
+        }
     }
     // endregion
 

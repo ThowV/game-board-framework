@@ -13,11 +13,15 @@ public abstract class AbstractTurnEntityRandomAI extends AbstractTurnEntity {
     private int turnSpeed;
 
     public AbstractTurnEntityRandomAI(String name) {
-        this(name, 2000);
+        this(name, "");
     }
 
-    public AbstractTurnEntityRandomAI(String name, int turnSpeed) {
-        super(EntityType.AI, name);
+    public AbstractTurnEntityRandomAI(String name, String color) {
+        this(name, color, 2000);
+    }
+
+    public AbstractTurnEntityRandomAI(String name, String colorHex, int turnSpeed) {
+        super(EntityType.AI, name, colorHex);
         this.turnSpeed = turnSpeed;
     }
 

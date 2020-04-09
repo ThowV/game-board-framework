@@ -23,7 +23,9 @@ public class ExampleApp extends Application {
         //gameInstance = tictactoeExample(primaryStage);
 
         // Subscribe to events
-        gameInstance.onGameStart(() -> System.out.println("Game started!"));
+        gameInstance.onGameStart((currentTurnEntity) -> System.out.println("Game started! "
+                + currentTurnEntity.getName() + " has the first move."));
+
         gameInstance.onGameEnd(new GameEndListener() {
             @Override
             public void onGameEnd(AbstractTurnEntity winningTurnEntity, AbstractTurnEntity losingTurnEntity) {
@@ -36,9 +38,10 @@ public class ExampleApp extends Application {
                 System.out.println("Game ended with a tie!");
             }
         });
-        gameInstance.onTurnSwitch((turnEntityOne, turnEntityTwo) -> System.out.println("Turn switched!"
-                + "\n\tFrom: " + turnEntityOne.getName() + " - Points: " + turnEntityOne.getPoints()
-                + "\n\tTo: " + turnEntityTwo.getName() + " - Points: " + turnEntityTwo.getPoints())
+
+        gameInstance.onTurnSwitch((currentTurnEntity, previousTurnEntity) -> System.out.println("Turn switched!"
+                + "\n\tFrom: " + previousTurnEntity.getName() + " - Points: " + previousTurnEntity.getPoints()
+                + "\n\tTo: " + currentTurnEntity.getName() + " - Points: " + currentTurnEntity.getPoints())
         );
 
         // Start the game!

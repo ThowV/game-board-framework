@@ -39,7 +39,7 @@ public abstract class AbstractGameInstance {
         currentTurnEntity ^= 1;
         AbstractTurnEntity currentTurnEntity = getCurrentTurnEntity();
 
-        eventManager.notifyOnTurnSwitch(previousTurnEntity, currentTurnEntity);
+        eventManager.notifyOnTurnSwitch(currentTurnEntity, previousTurnEntity);
     }
 
     public void start() {
@@ -50,8 +50,8 @@ public abstract class AbstractGameInstance {
 
     protected void startGame(AbstractGameInstance gameInstance) {
         // Initiate the first turn
+        eventManager.notifyOnGameStart(getCurrentTurnEntity());
         getCurrentTurnEntity().takeTurn(gameInstance);
-        eventManager.notifyOnGameStart();
     }
 
     public void doTurn(int x, int y) {

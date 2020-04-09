@@ -16,6 +16,13 @@ public class ReversiGameInstance extends AbstractGameInstance {
         super(gameBoard, entityOne, entityTwo,
                 ReversiGameInstance.class.getResource("/reversi-style.css").toExternalForm(),
                 currentTurnEntity);
+
+        for(AbstractTurnEntity turnEntity : super.getTurnEntities()) {
+            if (turnEntity.getGameBoardTileType() == GameBoardTileType.PLAYER_1)
+                turnEntity.setColor("#242424");
+            else
+                turnEntity.setColor("#D1D1D1");
+        }
     }
     // endregion
 

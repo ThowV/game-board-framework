@@ -17,9 +17,9 @@ public class GameBoardEventManager {
         gameStartListeners.add(listener);
     }
 
-    protected void notifyOnGameStart() {
+    protected void notifyOnGameStart(AbstractTurnEntity currentTurnEntity) {
         for (GameStartListener listener : gameStartListeners)
-            listener.onGameStart();
+            listener.onGameStart(currentTurnEntity);
     }
     // endregion
 
@@ -44,9 +44,9 @@ public class GameBoardEventManager {
         turnSwitchListeners.add(listener);
     }
 
-    protected void notifyOnTurnSwitch(AbstractTurnEntity previousTurnEntity, AbstractTurnEntity currentTurnEntity) {
+    protected void notifyOnTurnSwitch(AbstractTurnEntity currentTurnEntity, AbstractTurnEntity previousTurnEntity) {
         for (TurnSwitchListener listener : turnSwitchListeners)
-            listener.onTurnSwitch(previousTurnEntity, currentTurnEntity);
+            listener.onTurnSwitch(currentTurnEntity, previousTurnEntity);
     }
     // endregion
 }
