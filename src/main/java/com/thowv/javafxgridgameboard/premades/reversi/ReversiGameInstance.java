@@ -43,8 +43,7 @@ public class ReversiGameInstance extends AbstractGameInstance {
         super.doTurn(x, y);
 
         // Flip all possible game board tile types
-        ReversiAlgorithms.flipTilesFromOrigin(super.getGameBoard(),
-                super.getCurrentTurnEntity().getGameBoardTileType(), x, y);
+        ReversiAlgorithms.flipTilesFromOrigin(super.getGameBoard().getAllTiles(), x, y);
 
         super.calculateEntityPoints();
 

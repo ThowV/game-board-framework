@@ -1,8 +1,11 @@
 package com.thowv.javafxgridgameboard;
 
 import com.thowv.javafxgridgameboard.events.GameBoardTilePressedEvent;
+import javafx.application.Platform;
 
-public class GameBoardTileBehavior {
+import java.io.Serializable;
+
+public class GameBoardTileBehavior implements Serializable {
     private GameBoardTile gameBoardTileControl;
     private GameBoardTileType gameBoardTileType;
     private boolean ownedByPlayer = false;
@@ -31,6 +34,7 @@ public class GameBoardTileBehavior {
     // region Getters and setters
     public void setGameBoardTileType(GameBoardTileType gameBoardTileType) {
         this.gameBoardTileType = gameBoardTileType;
+
         gameBoardTileControl.getGameBoardTileSkin().setGameBoardTileType(gameBoardTileType);
 
         ownedByPlayer = gameBoardTileType == GameBoardTileType.PLAYER_1 || gameBoardTileType == GameBoardTileType.PLAYER_2;

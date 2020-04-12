@@ -1,16 +1,18 @@
 package com.thowv.javafxgridgameboard;
 
+import javafx.application.Platform;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GameBoard extends Control {
+public class GameBoard extends Control implements Serializable {
     private GameBoardBehavior gameBoardBehavior;
 
     public GameBoard(GameBoard gameBoard) {
         this(gameBoard.getSize());
-        //this.gameBoardBehavior = new GameBoardBehavior(gameBoard, gameBoard.getSize());
+        //Platform.runLater(() -> this.copyTiles(gameBoard.getAllTiles()));
     }
 
     public GameBoard(int size) {
@@ -59,8 +61,16 @@ public class GameBoard extends Control {
         gameBoardBehavior.setGameBoardTileType(xCord, yCord, gameBoardTileType);
     }
 
-    public void setTileTypes(ArrayList<GameBoardTile> gameBoardTiles, GameBoardTileType gameBoardTileType) {
-        gameBoardBehavior.setGameBoardTileTypes(gameBoardTiles, gameBoardTileType);
+    public void copyTiles(GameBoardTile[][] gameBoardTiles) {
+        gameBoardBehavior.copyGameBoardTiles(gameBoardTiles);
+    }
+
+    public void copyTiles(ArrayList<GameBoardTile> gameBoardTiles) {
+        gameBoardBehavior.copyGameBoardTiles(gameBoardTiles);
+    }
+
+    public void setTileTypes(ArrayList<GameBoardTile> gameBoardTiles, GameBoardTileType forcedType) {
+        gameBoardBehavior.setGameBoardTileTypes(gameBoardTiles, forcedType);
     }
 
     public GameBoardTile getTile(int xCord, int yCord) {
@@ -69,6 +79,10 @@ public class GameBoard extends Control {
 
     public ArrayList<GameBoardTile> getTilesByType(GameBoardTileType gameBoardTileType) {
         return gameBoardBehavior.getGameBoardTilesByType(gameBoardTileType);
+    }
+
+    public GameBoardTile[][] getAllTiles() {
+        return gameBoardBehavior.getAllGameBoardTiles();
     }
 
     public ArrayList<GameBoardTile> getTilesByTypes(GameBoardTileType[] gameBoardTileTypes) {

@@ -3,6 +3,7 @@ package com.thowv.javafxgridgameboard.examples;
 import com.thowv.javafxgridgameboard.AbstractGameInstance;
 import com.thowv.javafxgridgameboard.AbstractTurnEntity;
 import com.thowv.javafxgridgameboard.GameBoard;
+import com.thowv.javafxgridgameboard.GameBoardTileType;
 import com.thowv.javafxgridgameboard.listeners.GameEndListener;
 import com.thowv.javafxgridgameboard.premades.reversi.ReversiGameInstance;
 import com.thowv.javafxgridgameboard.premades.reversi.ReversiTurnEntityAI;

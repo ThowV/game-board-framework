@@ -3,7 +3,9 @@ package com.thowv.javafxgridgameboard;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 
-public class GameBoardTile extends Control {
+import java.io.Serializable;
+
+public class GameBoardTile extends Control implements Serializable {
     private GameBoardTileBehavior gameBoardTileBehavior;
 
     // region Constructors
@@ -50,6 +52,11 @@ public class GameBoardTile extends Control {
 
     public boolean isOwnedByPlayer() {
         return gameBoardTileBehavior.isOwnedByPlayer();
+    }
+
+    @Override
+    public String toString() {
+        return this.hashCode() + ", " + this.getXCord() + ", " + this.getYCord() + ", " + this.getGameBoardTileType();
     }
     // endregion
 }

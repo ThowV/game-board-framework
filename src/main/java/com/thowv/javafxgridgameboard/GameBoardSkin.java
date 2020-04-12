@@ -7,7 +7,9 @@ import javafx.scene.control.Control;
 import javafx.scene.control.SkinBase;
 import javafx.scene.layout.*;
 
-public class GameBoardSkin extends SkinBase<GameBoard> {
+import java.io.Serializable;
+
+public class GameBoardSkin extends SkinBase<GameBoard> implements Serializable {
     private GridPane boardGridPane;
 
     protected GameBoardSkin(GameBoard gameBoardControl) {

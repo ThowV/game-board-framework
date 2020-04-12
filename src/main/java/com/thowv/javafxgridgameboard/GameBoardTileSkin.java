@@ -4,7 +4,9 @@ import javafx.scene.control.SkinBase;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
-public class GameBoardTileSkin extends SkinBase<GameBoardTile> {
+import java.io.Serializable;
+
+public class GameBoardTileSkin extends SkinBase<GameBoardTile> implements Serializable {
     private Pane gameBoardTileInner;
 
     protected GameBoardTileSkin(GameBoardTile gameBoardTileControl) {

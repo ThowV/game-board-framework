@@ -1,8 +1,9 @@
 package com.thowv.javafxgridgameboard;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GameBoardBehavior {
+public class GameBoardBehavior implements Serializable {
     private GameBoard gameBoardControl;
     private int gameBoardSize;
     private GameBoardTile[][] gameBoardTiles;
@@ -46,14 +47,40 @@ public class GameBoardBehavior {
         return gameBoardSize;
     }
 
+    public void copyGameBoardTiles(GameBoardTile[][] gameBoardTiles) {
+        for (GameBoardTile[] gameBoardTileArray : gameBoardTiles) {
+            for (GameBoardTile gameBoardTile : gameBoardTileArray) {
+                int xCord = gameBoardTile.getXCord();
+                int yCord = gameBoardTile.getYCord();
+                GameBoardTileType tileType = gameBoardTile.getGameBoardTileType();
+
+                this.gameBoardTiles[xCord][yCord].setGameBoardTileType(tileType);
+            }
+        }
+    }
+
+    public void copyGameBoardTiles(ArrayList<GameBoardTile> gameBoardTiles) {
+        for (GameBoardTile gameBoardTile : gameBoardTiles) {
+            int xCord = gameBoardTile.getXCord();
+            int yCord = gameBoardTile.getYCord();
+            GameBoardTileType tileType = gameBoardTile.getGameBoardTileType();
+
+            this.gameBoardTiles[xCord][yCord].setGameBoardTileType(tileType);
+        }
+    }
+
     public void setGameBoardTileType(int xCord, int yCord, GameBoardTileType gameBoardTileType) {
         gameBoardTiles[xCord][yCord].setGameBoardTileType(gameBoardTileType);
     }
 
-    public void setGameBoardTileTypes(ArrayList<GameBoardTile> gameBoardTiles, GameBoardTileType gameBoardTileType) {
+    public void setGameBoardTileTypes(ArrayList<GameBoardTile> gameBoardTiles, GameBoardTileType forcedType) {
         for (GameBoardTile gameBoardTile : gameBoardTiles) {
-            gameBoardTile.setGameBoardTileType(gameBoardTileType);
+            gameBoardTile.setGameBoardTileType(forcedType);
         }
+    }
+
+    public GameBoardTile[][] getAllGameBoardTiles() {
+        return gameBoardTiles;
     }
 
     public void setGameBoardTiles(GameBoardTile[][] gameBoardTiles) {

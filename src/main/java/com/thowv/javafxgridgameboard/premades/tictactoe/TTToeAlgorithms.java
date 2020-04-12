@@ -1,7 +1,6 @@
 package com.thowv.javafxgridgameboard.premades.tictactoe;
 
 import com.thowv.javafxgridgameboard.AlgorithmHelper;
-import com.thowv.javafxgridgameboard.GameBoard;
 import com.thowv.javafxgridgameboard.GameBoardTile;
 import com.thowv.javafxgridgameboard.GameBoardTileType;
 
@@ -27,9 +26,9 @@ public class TTToeAlgorithms {
                     })
     };
 
-    public static GameBoardTileType checkThreeInRow(GameBoard gameBoard) {
+    public static GameBoardTileType checkThreeInRow(GameBoardTile[][] gameBoardTiles) {
         for (TTToeStartPosition startPosition : startPositions) {
-            GameBoardTileType result = checkThreeInRow(gameBoard, startPosition);
+            GameBoardTileType result = checkThreeInRow(gameBoardTiles, startPosition);
             if (result != null)
                 return result;
         }
@@ -37,9 +36,8 @@ public class TTToeAlgorithms {
         return null;
     }
 
-    private static GameBoardTileType checkThreeInRow(GameBoard gameBoard, TTToeStartPosition startPosition) {
-        GameBoardTile startingTile = gameBoard.getTile(
-                startPosition.getXCord(), startPosition.getYCord());
+    private static GameBoardTileType checkThreeInRow(GameBoardTile[][] gameBoardTiles, TTToeStartPosition startPosition) {
+        GameBoardTile startingTile = gameBoardTiles[startPosition.getXCord()][startPosition.getYCord()];
         GameBoardTileType startingTileType = startingTile.getGameBoardTileType();
 
         // Check if the game board tile of the start position is owned by a player
@@ -61,13 +59,13 @@ public class TTToeAlgorithms {
                 int[] newCoordinates = AlgorithmHelper.translateDirToCords(
                         direction, normalDirXCord, normalDirYCord);
 
-                toBeAdded += checkForMatch(gameBoard, startingTileType, newCoordinates);
+                toBeAdded += checkForMatch(gameBoardTiles, startingTileType, newCoordinates);
 
                 int[] newFlippedCoordinates = AlgorithmHelper.translateDirToCords(
                         AlgorithmHelper.flipGameBoardDirection(direction),
                         flippedDirXCord, flippedDirYCord);
 
-                toBeAdded += checkForMatch(gameBoard, startingTileType, newFlippedCoordinates);
+                toBeAdded += checkForMatch(gameBoardTiles, startingTileType, newFlippedCoordinates);
 
                 if (toBeAdded == 0)
                     break;
@@ -90,16 +88,16 @@ public class TTToeAlgorithms {
         return null;
     }
 
-    private static int checkForMatch(GameBoard gameBoard, GameBoardTileType startingTileType, int[] coordinates) {
+    private static int checkForMatch(GameBoardTile[][] gameBoardTiles, GameBoardTileType startingTileType, int[] coordinates) {
         int xCord = coordinates[0];
         int yCord = coordinates[1];
 
         // Check if the new coordinates are inside of the board bounds
-        if (xCord >= gameBoard.getSize() || xCord < 0 || yCord >= gameBoard.getSize() || yCord < 0)
+        if (xCord >= gameBoardTiles.length || xCord < 0 || yCord >= gameBoardTiles.length || yCord < 0)
             return 0;
 
         // Check if the current tile type matches the type this loop started with
-        if (gameBoard.getTile(xCord, yCord).getGameBoardTileType() == startingTileType)
+        if (gameBoardTiles[xCord][yCord].getGameBoardTileType() == startingTileType)
             return 1;
 
         return 0;

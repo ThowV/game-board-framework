@@ -17,7 +17,7 @@ public class ReversiTurnEntityPlayer extends AbstractTurnEntityPlayer {
 
     private void takeTurn(ReversiGameInstance gameInstance) {
         ArrayList<GameBoardTile> possibleGameBoardTiles = ReversiAlgorithms.determineTilePossibilities(
-                gameInstance.getGameBoard(), getGameBoardTileType());
+                gameInstance.getGameBoard().getAllTiles(), getGameBoardTileType());
 
         if (possibleGameBoardTiles.size() != 0)
             gameInstance.getGameBoard().setTileTypes(possibleGameBoardTiles, GameBoardTileType.INTERACTABLE);
