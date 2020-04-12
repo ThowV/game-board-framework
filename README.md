@@ -23,7 +23,7 @@ If you are using maven for your project and have a pom.xml ready, you can insert
 <dependency>
   <groupId>com.github.thowv.javafxcomps</groupId>
   <artifactId>grid-game-board-framework</artifactId>
-  <version>1.1</version>
+  <version>(See badge version)</version>
 </dependency>
 ```
 

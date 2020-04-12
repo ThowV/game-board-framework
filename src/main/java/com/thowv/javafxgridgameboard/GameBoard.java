@@ -8,6 +8,11 @@ import java.util.ArrayList;
 public class GameBoard extends Control {
     private GameBoardBehavior gameBoardBehavior;
 
+    public GameBoard(GameBoard gameBoard) {
+        this(gameBoard.getSize());
+        //this.gameBoardBehavior = new GameBoardBehavior(gameBoard, gameBoard.getSize());
+    }
+
     public GameBoard(int size) {
         this.gameBoardBehavior = new GameBoardBehavior(this, size);
     }
