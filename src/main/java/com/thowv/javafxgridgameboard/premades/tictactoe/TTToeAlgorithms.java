@@ -26,6 +26,11 @@ public class TTToeAlgorithms {
                     })
     };
 
+    /**
+     * Check if the board has three tiles of the same type in a row.
+     * @param gameBoardTiles All tiles in the game board
+     * @return The tile type that has three in a row on the game board
+     */
     public static GameBoardTileType checkThreeInRow(GameBoardTile[][] gameBoardTiles) {
         for (TTToeStartPosition startPosition : startPositions) {
             GameBoardTileType result = checkThreeInRow(gameBoardTiles, startPosition);

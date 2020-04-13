@@ -3,6 +3,13 @@ package com.thowv.javafxgridgameboard;
 public class AlgorithmHelper {
     public enum GameBoardDirection { W, NW, N, NE, E, SE, S, SW }
 
+    /**
+     * Translate coordinates to new coordinates using a given directions.
+     * @param direction The direction enum used for translating the coordinates
+     * @param xCord The starting x coordinate
+     * @param yCord The starting y coordinate
+     * @return The set of new coordinates
+     */
     public static int[] translateDirToCords(GameBoardDirection direction, int xCord, int yCord) {
         switch (direction) {
             case W:
@@ -37,6 +44,11 @@ public class AlgorithmHelper {
         return new int[]{xCord, yCord};
     }
 
+    /**
+     * Flip a direction enum into the opposite direction.
+     * @param direction The direction enum to be flipped
+     * @return The new direction
+     */
     public static GameBoardDirection flipGameBoardDirection(GameBoardDirection direction) {
         switch (direction) {
             case W:
@@ -60,6 +72,11 @@ public class AlgorithmHelper {
         return direction;
     }
 
+    /**
+     * Flip a tile type enum to the opposite type.
+     * @param gameBoardTileType The tile type to be flipped
+     * @return The new tile type
+     */
     public static GameBoardTileType flipTileType(GameBoardTileType gameBoardTileType) {
         if (gameBoardTileType == GameBoardTileType.PLAYER_1)
             return GameBoardTileType.PLAYER_2;

@@ -9,6 +9,10 @@ import java.io.Serializable;
 public class GameBoardTileSkin extends SkinBase<GameBoardTile> implements Serializable {
     private Pane gameBoardTileInner;
 
+    /**
+     * Create a new tile using javafx.
+     * @param gameBoardTileControl The control of this tile
+     */
     protected GameBoardTileSkin(GameBoardTile gameBoardTileControl) {
         super(gameBoardTileControl);
 
@@ -26,6 +30,10 @@ public class GameBoardTileSkin extends SkinBase<GameBoardTile> implements Serial
         getChildren().add(stackPane);
     }
 
+    /**
+     * Set the tile type and switch visuals.
+     * @param gameBoardTileType The type determining the visuals
+     */
     public void setGameBoardTileType(GameBoardTileType gameBoardTileType) {
         if (gameBoardTileInner.getStyleClass().size() == 2)
             gameBoardTileInner.getStyleClass().remove(1);

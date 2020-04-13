@@ -12,6 +12,10 @@ import java.io.Serializable;
 public class GameBoardSkin extends SkinBase<GameBoard> implements Serializable {
     private GridPane boardGridPane;
 
+    /**
+     * Create the game board by creating a grid with constraints using javafx.
+     * @param gameBoardControl The control of game board
+     */
     protected GameBoardSkin(GameBoard gameBoardControl) {
         super(gameBoardControl);
         int gameBoardSize = gameBoardControl.getSize();
@@ -67,6 +71,11 @@ public class GameBoardSkin extends SkinBase<GameBoard> implements Serializable {
         gameBoardControl.getGameBoardBehavior().setGameBoardTiles(createGameBoardTiles(gameBoardSize));
     }
 
+    /**
+     * Populate the game board skin with tiles.
+     * @param gameBoardSize The size of the game board
+     * @return A multidimensional array of board tiles
+     */
     public GameBoardTile[][] createGameBoardTiles(int gameBoardSize) {
         GameBoardTile[][] gameBoardTiles = new GameBoardTile[gameBoardSize][gameBoardSize];
         boardGridPane.getChildren().clear();

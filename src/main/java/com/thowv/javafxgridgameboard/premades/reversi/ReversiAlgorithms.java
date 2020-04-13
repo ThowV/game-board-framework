@@ -8,6 +8,12 @@ import java.util.ArrayList;
 
 public class ReversiAlgorithms {
     // region Determine game board tile possibilities
+    /**
+     * Determine the tiles that can be picked to do a move.
+     * @param gameBoardTiles All tiles in the game board
+     * @param tileType The tile type that matches the one of the current turn entity
+     * @return All possible tiles
+     */
     public static ArrayList<GameBoardTile> determineTilePossibilities(GameBoardTile[][] gameBoardTiles,
                                                                       GameBoardTileType tileType) {
         ArrayList<GameBoardTile> possibleTiles = new ArrayList<>();
@@ -74,6 +80,12 @@ public class ReversiAlgorithms {
     // endregion
 
     // region Flip game board tiles from origin
+    /**
+     * Flip tiles from a given start position in the game board array.
+     * @param gameBoard All tiles in the game board
+     * @param xCord The x coordinate of the start tile
+     * @param yCord The y coordinate of the start tile
+     */
     public static void flipTilesFromOrigin(GameBoardTile[][] gameBoard, int xCord, int yCord) {
         GameBoardTileType gameBoardTileType = gameBoard[xCord][yCord].getGameBoardTileType();
 

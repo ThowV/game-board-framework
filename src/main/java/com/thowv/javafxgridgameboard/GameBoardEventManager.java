@@ -13,6 +13,10 @@ public class GameBoardEventManager {
     private List<TurnSwitchListener> turnSwitchListeners = new ArrayList<>();
 
     // region onGameStart event
+    /**
+     * Add a listener who's corresponding method will be called when needed.
+     * @param listener The listener implementing the corresponding interface
+     */
     public void onGameStart(GameStartListener listener) {
         gameStartListeners.add(listener);
     }
@@ -24,6 +28,10 @@ public class GameBoardEventManager {
     // endregion
 
     // region onGameEnd event
+    /**
+     * Add a listener who's corresponding method will be called when needed.
+     * @param listener The listener implementing the corresponding interface
+     */
     public void onGameEnd(GameEndListener listener) {
         gameEndListeners.add(listener);
     }
@@ -40,6 +48,10 @@ public class GameBoardEventManager {
     // endregion
 
     // region onTurnSwitch event
+    /**
+     * Add a listener who's corresponding method will be called when needed.
+     * @param listener The listener implementing the corresponding interface
+     */
     public void onTurnSwitch(TurnSwitchListener listener) {
         turnSwitchListeners.add(listener);
     }

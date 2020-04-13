@@ -83,6 +83,18 @@ public class GameBoardBehavior implements Serializable {
         return gameBoardTiles;
     }
 
+    public GameBoardTile[][] getAllGameBoardTilesCopy() {
+        GameBoardTile[][] gameBoardTileCopies = new GameBoardTile[gameBoardSize][gameBoardSize];
+
+        for (int i = 0; i < gameBoardSize; i++) {
+            for (int j = 0; j < gameBoardSize; j++) {
+                gameBoardTileCopies[i][j] = new GameBoardTile(gameBoardTiles[i][j]);
+            }
+        }
+
+        return gameBoardTileCopies;
+    }
+
     public void setGameBoardTiles(GameBoardTile[][] gameBoardTiles) {
         this.gameBoardTiles = gameBoardTiles;
     }

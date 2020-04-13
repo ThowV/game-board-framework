@@ -6,7 +6,7 @@
 
     <groupId>com.github.thowv.javafxcomps</groupId>
     <artifactId>grid-game-board-framework</artifactId>
-    <version>1.9</version>
+    <version>1.10</version>
 
     <name>Game Board Framework</name>
     <description>A framework for creating grid-based board games using JavaFX</description>
