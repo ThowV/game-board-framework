@@ -10,7 +10,7 @@ Reversi | Tic Tac Toe
 ---|---
 ![](resources/reversi-example.png) | ![](resources/tttoe-example.png)
 
-## Getting Started
+## Getting started
 
 These instructions will get you a copy of the project up and running on your local machine.
 
