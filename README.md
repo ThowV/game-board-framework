@@ -29,7 +29,7 @@ If you are using maven for your project and have a pom.xml ready, you can insert
 
 Maven should now automatically add the dependency to your external libraries.
 
-## Built With 
+## Built using 
 
 * [JavaFX](https://openjfx.io/) - The client framework
 * [Maven](https://maven.apache.org/) - Dependency Management
